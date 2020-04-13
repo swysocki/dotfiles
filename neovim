@@ -4,13 +4,15 @@ set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 set cursorline
 autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab
 let g:go_fmt_command = "goimports"
-let g:python3_host_prog = "/home/swysocki/virtual_envs/neovim3/bin/python3"
+let g:python3_host_prog = expand('~/virtual_envs/neovim3/bin/python3')
 let g:pymode_python = "python3"
 let g:deoplete#enable_at_startup = 1
+let g:terraform_fmt_on_save=1
 call plug#begin('~/.local/share/nvim/plugged')
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
   Plug 'python-mode/python-mode', { 'branch': 'develop' }
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'hashivim/vim-terraform'
   Plug 'google/vim-maktaba'
   Plug 'google/vim-codefmt'
   Plug 'google/vim-glaive'
