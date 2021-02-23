@@ -3,6 +3,7 @@ set number
 set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 set cursorline
 autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType sh setlocal ts=4 sts=4 sw=4 expandtab
 let g:go_fmt_command = "goimports"
 let g:python3_host_prog = expand('~/.local/share/nvim/.venv/bin/python3')
 let g:black_virtualenv = expand('~/.local/share/nvim/.venv')
@@ -14,19 +15,14 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'psf/black', { 'branch': 'stable' }
   Plug 'python-mode/python-mode', { 'branch': 'develop' }
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'rizzatti/dash.vim'
-  Plug 'hashivim/vim-terraform'
-  Plug 'google/vim-maktaba'
-  Plug 'google/vim-codefmt'
-  Plug 'google/vim-glaive'
   Plug 'tpope/vim-fugitive'
 call plug#end()
 " Setup the file explorer (netrw)
-let g:netrw_banner = 0
-let g:netrw_winsize = 15
-let g:netrw_browse_split = 4
-let g:netrw_liststyle = 3
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
-augroup END
+"let g:netrw_banner = 0
+"let g:netrw_winsize = 15
+"let g:netrw_browse_split = 4
+"let g:netrw_liststyle = 3
+"augroup ProjectDrawer
+"  autocmd!
+"  autocmd VimEnter * :Vexplore
+"augroup END
