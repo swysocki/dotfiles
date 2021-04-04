@@ -16,6 +16,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'python-mode/python-mode', { 'branch': 'develop' }
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'tpope/vim-fugitive'
+  Plug 'deoplete-plugins/deoplete-jedi'
 call plug#end()
 colorscheme material
 " Setup the file explorer (netrw)
