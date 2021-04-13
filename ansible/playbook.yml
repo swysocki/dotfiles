@@ -6,6 +6,7 @@
     user:
       username: "swysocki"
       ssh_pub_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlnFHI5swpZl5FG+BINqcr0TcAuOhYl9isMxgGyXkFU primary"
+      default_shell: "zsh"
 
   tasks:
     - name: install common tools
@@ -19,11 +20,12 @@
         - fzf
         - htop
         - virtualenv
+        - zsh
 
     - name: create users
       ansible.builtin.user:
         name: "{{ user.username }}"
-        shell: /bin/bash
+        shell: "/bin/{{ user.default_shell }}"
         groups: sudo
 
     - name: set authorized keys
@@ -33,12 +35,33 @@
         key: "{{ user.ssh_pub_key }}"
 
     - name: allow passwordless sudo
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/sudoers
         state: present
         regexp: '^%sudo'
         line: '%sudo ALL=(ALL) NOPASSWD: ALL'
         validate: 'visudo -cf %s'
+
+    - name: install oh-my-zsh
+      ansible.builtin.shell:
+        cmd: wget -qO - https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash -
+      become_user: "{{ user.username }}"
+      when: user.default_shell == "zsh"
+
+    - name: install auto-suggestion plugin
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions
+        dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+      become_user: "{{ user.username }}"
+      when: user.default_shell == "zsh"
+
+    - name: enable zsh plugins
+      ansible.builtin.lineinfile:
+        path: ~/.zshrc
+        regexp: '^plugins\=\(.*\)'
+        line: 'plugins=(git fzf zsh-autosuggestions)'
+      become_user: "{{ user.username }}"
+      when: user.default_shell == "zsh"
 
     - name: add fzf settings for bash
       ansible.builtin.copy:
@@ -50,12 +73,14 @@
         owner: root
         group: root
         mode: '644'
+      when: user.default_shell == "bash"
 
     - name: install git bash prompt for existing users
       ansible.builtin.git:
         repo: https://github.com/magicmonty/bash-git-prompt.git
         dest: "/home/{{ user.username }}/.bash-git-prompt"
         depth: 1
+      when: user.default_shell == "bash"
 
     - name: add git bash prompt to bashrc
       ansible.builtin.copy:
@@ -69,6 +94,7 @@
         owner: root
         group: root
         mode: '644'
+      when: user.default_shell == "bash"
 
     - name: create vim plug directory 
       ansible.builtin.file:
