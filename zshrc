@@ -104,18 +104,9 @@ alias mp="multipass"
 # enable fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# enable direnv
-eval "$(direnv hook zsh)"
-
 # Workaround for direnv PS1 prompt with virtualenv
 setopt PROMPT_SUBST
 
-show_virtual_env() {
-  if [[ -n "$VIRTUAL_ENV" && -n "$DIRENV_DIR" ]]; then
-    echo "($(basename $VIRTUAL_ENV))"
-  fi
-}
-PS1='$(show_virtual_env)'$PS1
 
 # Create a personal dir for Gems
 export GEM_HOME="$HOME/.gem"
