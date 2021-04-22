@@ -11,14 +11,20 @@ let g:pymode_python = "python3"
 let g:deoplete#enable_at_startup = 1
 let g:terraform_fmt_on_save=1
 call plug#begin('~/.local/share/nvim/plugged')
+  Plug 'google/vim-maktaba'
+  Plug 'google/vim-codefmt'
+  Plug 'google/vim-glaive'
   Plug 'kaicataldo/material.vim', { 'branch': 'main' }
   Plug 'psf/black', { 'branch': 'stable' }
   Plug 'python-mode/python-mode', { 'branch': 'develop' }
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'tpope/vim-fugitive'
   Plug 'deoplete-plugins/deoplete-jedi'
+  Plug 'davidhalter/jedi-vim'
+  Plug 'tpope/vim-surround'
 call plug#end()
 colorscheme material
+autocmd FileType json let b:codefmt_formatter = 'prettier'
 " Setup the file explorer (netrw)
 "let g:netrw_banner = 0
 "let g:netrw_winsize = 15
