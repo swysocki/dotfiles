@@ -7,7 +7,7 @@ to clone this repo, just curl the playbook and the rest is taken care of.
 
 Make sure Ansible is installed :| You will also need a module from Galaxy:
 ```
-$ ansible-galaxy collection install ansible.posix
+$ ansible-galaxy collection install ansible.posix community.general
 ```
 Grab this file directly:
 ```
