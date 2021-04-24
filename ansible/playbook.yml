@@ -7,6 +7,8 @@
       username: "swysocki"
       ssh_pub_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlnFHI5swpZl5FG+BINqcr0TcAuOhYl9isMxgGyXkFU primary"
       default_shell: "zsh"
+      email: "swysocki@gmail.com"
+      name: "Scott Wysocki"
 
   tasks:
     - name: install common tools
@@ -42,11 +44,31 @@
         line: '%sudo ALL=(ALL) NOPASSWD: ALL'
         validate: 'visudo -cf %s'
 
+    - name: add email to git config
+      community.general.git_config:
+        name: user.email
+        scope: global
+        value: "{{ user.email }}"
+      become_user: "{{ user.username }}"
+
+    - name: add username to git config
+      community.general.git_config:
+        name: user.name
+        scope: global
+        value: "{{ user.name }}"
+      become_user: "{{ user.username }}"
+
+    - name: check for omz installation
+      ansible.builtin.stat:
+        path: "/home/{{ user.username }}/.oh-my-zsh"
+      register: omz
+
     - name: install oh-my-zsh
-      ansible.builtin.shell:
+      #ansible.builtin.shell:
+      shell:
         cmd: wget -qO - https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash -
       become_user: "{{ user.username }}"
-      when: user.default_shell == "zsh"
+      when: user.default_shell == "zsh" and not omz.stat.exists
 
     - name: install auto-suggestion plugin
       ansible.builtin.git:
@@ -55,13 +77,13 @@
       become_user: "{{ user.username }}"
       when: user.default_shell == "zsh"
 
-    - name: enable zsh plugins
-      ansible.builtin.lineinfile:
-        path: ~/.zshrc
-        regexp: '^plugins\=\(.*\)'
-        line: 'plugins=(git fzf zsh-autosuggestions)'
-      become_user: "{{ user.username }}"
-      when: user.default_shell == "zsh"
+      #- name: enable zsh plugins
+      #ansible.builtin.lineinfile:
+      #  path: ~/.zshrc
+      #  regexp: '^plugins\=\(.*\)'
+      #  line: 'plugins=(git fzf zsh-autosuggestions)'
+      #become_user: "{{ user.username }}"
+      #when: user.default_shell == "zsh"
 
     - name: add fzf settings for bash
       ansible.builtin.copy:
@@ -125,4 +147,43 @@
         state: directory
         owner: "{{ user.username }}"
         group: "{{ user.username }}"
+
+    - name: make code repo directory
+      ansible.builtin.file:
+        path: "/home/{{ user.username }}/.config/nvim/"
+        state: directory
+        owner: "{{ user.username }}"
+        group: "{{ user.username }}"
+
+    - name: clone dotfiles
+      ansible.builtin.git:
+        repo: https://github.com/swysocki/dotfiles
+        dest: "/home/{{ user.username }}/devel/repos/dotfiles"
+        depth: 1
+      become_user: "{{ user.username }}"
+
+    - name: link neovim config
+      ansible.builtin.file:
+        src: "/home/{{ user.username }}/devel/repos/dotfiles/neovim"
+        dest: "/home/{{ user.username }}/.config/nvim/init.vim"
+        owner: "{{ user.username }}"
+        group: "{{ user.username }}"
+        state: link
+
+    - name: link tmux config
+      ansible.builtin.file:
+        src: "/home/{{ user.username }}/devel/repos/dotfiles/tmux.conf"
+        dest: "/home/{{ user.username }}/.tmux.conf"
+        owner: "{{ user.username }}"
+        group: "{{ user.username }}"
+        state: link
+
+    - name: link zsh config
+      ansible.builtin.file:
+        src: "/home/{{ user.username }}/devel/repos/dotfiles/zshrc"
+        dest: "/home/{{ user.username }}/.zshrc"
+        owner: "{{ user.username }}"
+        group: "{{ user.username }}"
+        state: link
+        force: yes
 
