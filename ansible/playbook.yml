@@ -23,6 +23,7 @@
         - htop
         - virtualenv
         - zsh
+        - acl
 
     - name: create users
       ansible.builtin.user:
