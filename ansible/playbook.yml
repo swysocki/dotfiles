@@ -1,6 +1,5 @@
 ---
-- hosts: 127.0.0.1
-  connection: local
+- hosts: all
   become: 'yes'
   vars:
     user:
@@ -24,6 +23,8 @@
         - virtualenv
         - zsh
         - acl
+        - python3-pip
+        - python3-venv
 
     - name: create users
       ansible.builtin.user:
@@ -78,13 +79,27 @@
       become_user: "{{ user.username }}"
       when: user.default_shell == "zsh"
 
-      #- name: enable zsh plugins
-      #ansible.builtin.lineinfile:
-      #  path: ~/.zshrc
-      #  regexp: '^plugins\=\(.*\)'
-      #  line: 'plugins=(git fzf zsh-autosuggestions)'
-      #become_user: "{{ user.username }}"
-      #when: user.default_shell == "zsh"
+    - name: install pipx for user
+      ansible.builtin.pip:
+        name: pipx
+        extra_args: --user 
+      become_user: "{{ user.username }}"
+
+    - name: add pipx to path
+      ansible.builtin.shell:
+        cmd: python3 -m pipx ensurepath
+      become_user: "{{ user.username }}"
+
+    - name: add pipx packages
+      ansible.builtin.shell:
+        cmd: "/home/{{ user.username }}/.local/bin/pipx install {{ item }}"
+      become_user: "{{ user.username }}"
+      loop:
+        - isort
+        - pytest
+        - black
+        - flake8
+        - pyls
 
     - name: add fzf settings for bash
       ansible.builtin.copy:
@@ -133,23 +148,7 @@
         owner: "{{ user.username }}"
         group: "{{ user.username }}"
 
-    - name: create a python virtualenv for neovim
-      ansible.builtin.pip:
-        name:
-          - pynvim
-          - black
-          - msgpack>=1.0
-        virtualenv: "/home/{{ user.username }}/.local/share/nvim/.venv"
-      become_user: "{{ user.username }}"
-
-    - name: make a directory for virtualenvs
-      ansible.builtin.file:
-        path: "/home/{{ user.username }}/.virtualenvs"
-        state: directory
-        owner: "{{ user.username }}"
-        group: "{{ user.username }}"
-
-    - name: make code repo directory
+    - name: make nvim config directory
       ansible.builtin.file:
         path: "/home/{{ user.username }}/.config/nvim/"
         state: directory
@@ -165,7 +164,7 @@
 
     - name: link neovim config
       ansible.builtin.file:
-        src: "/home/{{ user.username }}/devel/repos/dotfiles/neovim"
+        src: "/home/{{ user.username }}/devel/repos/dotfiles/init.vim"
         dest: "/home/{{ user.username }}/.config/nvim/init.vim"
         owner: "{{ user.username }}"
         group: "{{ user.username }}"

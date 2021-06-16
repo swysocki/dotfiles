@@ -9,6 +9,7 @@ Make sure Ansible is installed :| You will also need a module from Galaxy:
 ```
 $ ansible-galaxy collection install ansible.posix community.general
 ```
+
 Grab this file directly:
 ```
 $ curl https://raw.githubusercontent.com/swysocki/dotfiles/master/ansible/playbook.yml -O
@@ -17,4 +18,9 @@ $ curl https://raw.githubusercontent.com/swysocki/dotfiles/master/ansible/playbo
 
 ```
 $ ansible-playbook ./playbook.yml
+```
+
+or against a remote server:
+```
+$ ansible-playbook ./playbook.yml -i myhost.server.example,
 ```
