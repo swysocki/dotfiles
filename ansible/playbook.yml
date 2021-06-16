@@ -94,6 +94,7 @@
       ansible.builtin.shell:
         cmd: "/home/{{ user.username }}/.local/bin/pipx install {{ item }}"
       become_user: "{{ user.username }}"
+      ignore_errors: yes
       loop:
         - isort
         - pytest
