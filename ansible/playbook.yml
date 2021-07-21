@@ -16,7 +16,6 @@
       loop: 
         - git
         - tmux
-        - neovim
         - ripgrep
         - fzf
         - htop
@@ -25,6 +24,20 @@
         - acl
         - python3-pip
         - python3-venv
+
+    - name: install neovim
+      ansible.builtin.get_url:
+        url: https://github.com/neovim/neovim/releases/download/v0.5.0/nvim.appimage
+        dest: "/home/{{ user.username }}/.local/bin/nvim.appimage"
+        mode: u+x
+
+    - name: linux neovim to path
+      ansible.builtin.file:
+        src: "/home/{{ user.username }}/.local/bin/nvim.appimage"
+        dest: "/home/{{ user.username }}/.local/bin/nvim"
+        owner: "{{ user.username }}"
+        group: "{{ user.username }}"
+        state: link
 
     - name: create users
       ansible.builtin.user:
@@ -100,7 +113,8 @@
         - pytest
         - black
         - flake8
-        - pyls
+        - python-language-server
+        - mypy
 
     - name: add fzf settings for bash
       ansible.builtin.copy:
