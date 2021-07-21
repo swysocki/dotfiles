@@ -24,6 +24,7 @@
         - acl
         - python3-pip
         - python3-venv
+        - pipx
 
     - name: install neovim
       ansible.builtin.get_url:
@@ -92,20 +93,9 @@
       become_user: "{{ user.username }}"
       when: user.default_shell == "zsh"
 
-    - name: install pipx for user
-      ansible.builtin.pip:
-        name: pipx
-        extra_args: --user 
-      become_user: "{{ user.username }}"
-
-    - name: add pipx to path
-      ansible.builtin.shell:
-        cmd: python3 -m pipx ensurepath
-      become_user: "{{ user.username }}"
-
     - name: add pipx packages
       ansible.builtin.shell:
-        cmd: "/home/{{ user.username }}/.local/bin/pipx install {{ item }}"
+        cmd: "pipx install {{ item }}"
       become_user: "{{ user.username }}"
       ignore_errors: yes
       loop:
@@ -115,6 +105,7 @@
         - flake8
         - python-language-server
         - mypy
+        - poetry
 
     - name: add fzf settings for bash
       ansible.builtin.copy:
