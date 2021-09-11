@@ -14,7 +14,10 @@ colorscheme material
 let g:ale_completion_enabled = 1
 let g:ale_fixers = {'python' :['isort', 'black']}
 let g:ale_fix_on_save = 1
-let g:ale_linters = {'python' :['flake8', 'pyls']}
+let g:ale_linters = {
+\  'python' :['flake8', 'pyls'],
+\  'html' :['prettier']
+\}
 let g:ale_python_flake8_options = '--max-line-length=88'
 " trendy error symbol
 let g:ale_sign_error = "◉"
