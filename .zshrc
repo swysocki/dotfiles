@@ -1,8 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/swysocki/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -70,9 +70,13 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+plugins=(git fzf zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
+
+# Non oh-my-zsh plugins
+source ~/.zsh_plugins/zsh-git-prompt/zshrc.sh
+PROMPT+='$(git_super_status) %#'
 
 # User configuration
 
@@ -99,3 +103,15 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias mp="multipass"
+
+# enable fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Workaround for direnv PS1 prompt with virtualenv
+setopt PROMPT_SUBST
+
+
+# Create a personal dir for Gems
+export GEM_HOME="$HOME/.gem"
+export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
