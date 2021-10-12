@@ -7,6 +7,7 @@ autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 expandtab
 call plug#begin('~/.local/share/nvim/plugged')
   Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+  Plug 'davidhalter/jedi-vim'
   Plug 'tpope/vim-fugitive'
   Plug 'dense-analysis/ale'
   Plug 'nvim-lua/plenary.nvim'
@@ -23,6 +24,8 @@ let g:ale_linters = {
 \  'python' :['flake8', 'pyls'],
 \  'html' :['prettier']
 \}
+let g:ale_python_auto_poetry = 1
+let g:ale_python_pyls_executable = "pylsp"
 let g:ale_python_flake8_options = '--max-line-length=88'
 
 " trendy error symbol
