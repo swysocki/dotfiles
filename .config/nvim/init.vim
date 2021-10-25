@@ -51,3 +51,7 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" Ale shortcuts for code navigation
+nnoremap <leader>fr <cmd>ALEFindReferences<cr>
+nnoremap <leader>gd <cmd>ALEGoToDefinition<cr>
+nnoremap <leader>mv <cmd>ALERename<cr>
