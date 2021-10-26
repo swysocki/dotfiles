@@ -15,16 +15,17 @@ call plug#end()
 
 colorscheme material
 
+" npm install -g pyright
 " pipx install isort, black, flake8
 let g:ale_completion_enabled = 1
 let g:ale_fixers = {'python' :['isort', 'black']}
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
-\  'python' :['flake8', 'pylsp'],
+\  'python' :['flake8', 'pyright'],
 \  'html' :['prettier']
 \}
 let g:ale_python_auto_poetry = 1
-let g:ale_python_pyls_executable = "pylsp"
+let g:ale_python_pyls_executable = "pyright"
 let g:ale_python_flake8_options = '--max-line-length=88'
 
 " trendy error symbol
