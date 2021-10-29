@@ -76,8 +76,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Non oh-my-zsh plugins
 source ~/.zsh_plugins/zsh-git-prompt/zshrc.sh
-PROMPT+='$(git_super_status) %#'
-
+PROMPT+='$(git_super_status) %# '
+PROMPT="$fg[blue]%}%m $PROMPT"
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -115,3 +115,6 @@ setopt PROMPT_SUBST
 # Create a personal dir for Gems
 export GEM_HOME="$HOME/.gem"
 export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
+
+# added by pipx (https://github.com/pipxproject/pipx)
+export PATH="/home/swysocki/.local/bin:$PATH"
