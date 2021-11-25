@@ -2,6 +2,9 @@ set nofoldenable
 set number
 set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 set cursorline
+" decrease the time it takes for hover events in Ale
+" default is 4000
+set updatetime=300
 let mapleader=","
 autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 expandtab
