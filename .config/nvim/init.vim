@@ -14,6 +14,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'dense-analysis/ale'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
 call plug#end()
 
 colorscheme material
@@ -34,6 +35,7 @@ let g:ale_python_auto_poetry = 1
 let g:ale_python_pyls_executable = "pyright"
 let g:ale_python_flake8_options = '--max-line-length=88'
 let g:ale_sh_shfmt_options = '-ci -i 4'
+let g:ale_open_list = 1
 
 " trendy error symbol
 let g:ale_sign_error = "◉"
@@ -41,6 +43,19 @@ highlight ALEErrorSign ctermfg=131 ctermbg=none
 
 " make the error background less jarring
 highlight ALEError ctermbg=131
+
+
+lua <<EOF
+require('nvim-treesitter.configs').setup {
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+  indent = {
+    enable = true,
+  },
+}
+EOF
 
 " Setup the file explorer (netrw)
 let g:netrw_banner = 0
