@@ -8,5 +8,7 @@ alias vim='nvim'
 alias tmls='tmux ls'
 alias tma='tmux attach -t'
 alias tmn='tmux new -s'
-
+#
+# docker
+alias dorn='docker run --rm -it'
 

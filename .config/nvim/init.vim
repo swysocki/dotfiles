@@ -54,7 +54,7 @@ function! ToggleExplorer()
 endfunction
 map <silent> <F6> :call ToggleExplorer() <CR>
 
-" Find files using Telescope command-line sugar.
+" Find files using Telescope command-line
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
@@ -63,3 +63,6 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fr <cmd>ALEFindReferences<cr>
 nnoremap <leader>gd <cmd>ALEGoToDefinition<cr>
 nnoremap <leader>mv <cmd>ALERename<cr>
+" Buffer shortcuts
+nnoremap <silent> <leader>bn :bn<cr>
+nnoremap <silent> <leader>bp :bp<cr>

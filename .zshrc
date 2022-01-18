@@ -77,7 +77,7 @@ source $ZSH/oh-my-zsh.sh
 # Non oh-my-zsh plugins
 source ~/.zsh_plugins/zsh-git-prompt/zshrc.sh
 PROMPT+='$(git_super_status) %# '
-PROMPT="$fg[blue]%}%m $PROMPT"
+#PROMPT="$fg[blue]%}%m $PROMPT"
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
