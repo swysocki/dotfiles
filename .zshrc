@@ -118,3 +118,5 @@ export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
 
 # added by pipx (https://github.com/pipxproject/pipx)
 export PATH="/home/swysocki/.local/bin:$PATH"
+
+export PATH="/usr/local/opt/binutils/bin:$PATH"
