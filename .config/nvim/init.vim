@@ -36,10 +36,12 @@ let g:ale_python_auto_poetry = 1
 let g:ale_python_pyls_executable = "pyright"
 let g:ale_python_flake8_options = '--max-line-length=88'
 let g:ale_sh_shfmt_options = '-ci -i 4'
-let g:ale_open_list = 1
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
 
-" trendy error symbol
+" trendy error symbols
 let g:ale_sign_error = "◉"
+let g:ale_sign_warning = "▲"
 highlight ALEErrorSign ctermfg=131 ctermbg=none
 
 " make the error background less jarring
