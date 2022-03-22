@@ -1,4 +1,3 @@
-set nofoldenable
 set number
 set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 set cursorline
@@ -19,6 +18,11 @@ call plug#begin('~/.local/share/nvim/plugged')
 call plug#end()
 
 colorscheme material
+
+" set folds
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldminlines=5
 
 " npm install -g pyright
 " pipx install isort, black, flake8
