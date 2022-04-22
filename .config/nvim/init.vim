@@ -1,8 +1,7 @@
 set number
 set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 set cursorline
-" decrease the time it takes for hover events in Ale
-" default is 4000
+
 set updatetime=300
 let mapleader=","
 autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab
@@ -11,13 +10,16 @@ autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 call plug#begin('~/.local/share/nvim/plugged')
   Plug 'kaicataldo/material.vim', { 'branch': 'main' }
   Plug 'tpope/vim-fugitive'
-  Plug 'dense-analysis/ale'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
   Plug 'google/vim-jsonnet'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/nvim-cmp'
 call plug#end()
-
+set completeopt=menu,menuone,noselect
 colorscheme material
 
 " set folds
@@ -25,35 +27,26 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldminlines=5
 
-" npm install -g pyright
-" pipx install isort, black, flake8
-let g:ale_completion_enabled = 1
-let g:ale_fixers = {
-\  'python' :['isort', 'black'],
-\  'sh' :['shfmt']
-\}
-let g:ale_fix_on_save = 1
-let g:ale_linters = {
-\  'python' :['flake8', 'pyright'],
-\  'html' :['prettier']
-\}
-let g:ale_python_auto_poetry = 1
-let g:ale_python_pyls_executable = "pyright"
-let g:ale_python_flake8_options = '--max-line-length=88'
-let g:ale_sh_shfmt_options = '-ci -i 4'
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 1
-
-" trendy error symbols
-let g:ale_sign_error = "◉"
-let g:ale_sign_warning = "▲"
-highlight ALEErrorSign ctermfg=131 ctermbg=none
-
-" make the error background less jarring
-highlight ALEError ctermbg=131
-
-
 lua <<EOF
+local cmp = require'cmp'
+cmp.setup({
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+    }, {
+      { name = 'buffer' },
+    })
+  })
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
@@ -63,6 +56,26 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
 }
+require('lspconfig').pyright.setup{}
+local opts = { noremap=true, silent=true }
+vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+end
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'pyright' }
+for _, lsp in pairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      -- This will be the default in neovim 0.7+
+      debounce_text_changes = 150,
+    }
+  }
+end
 EOF
 
 " Setup the file explorer (netrw)
@@ -82,10 +95,6 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-" Ale shortcuts for code navigation
-nnoremap <leader>fr <cmd>ALEFindReferences<cr>
-nnoremap <leader>gd <cmd>ALEGoToDefinition<cr>
-nnoremap <leader>mv <cmd>ALERename<cr>
 " Buffer shortcuts
 nnoremap <silent> <leader>bn :bn<cr>
 nnoremap <silent> <leader>bp :bp<cr>
