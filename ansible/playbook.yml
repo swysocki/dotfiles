@@ -1,15 +1,28 @@
 ---
-- hosts: all
-  become: 'yes'
+- hosts: localhost
+  become: 'no'
   vars:
     user:
-      username: "swysocki"
+      # username: "swysocki"
+      username: "scottw"
       ssh_pub_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlnFHI5swpZl5FG+BINqcr0TcAuOhYl9isMxgGyXkFU primary"
-      default_shell: "bash"
+      default_shell: "zsh"
       email: "swysocki@gmail.com"
       name: "Scott Wysocki"
 
   tasks:
+    - name: set variables for Linux
+      set_fact:
+        home_path: "/home/{{ user.username }}"
+        group_name: "{{ user.username }}"
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+    - name: set variables for Mac
+      set_fact:
+        home_path: "/Users/{{ user.username }}"
+        group_name: staff
+      when: ansible_os_family == "Darwin"
+
     - name: install common tools
       ansible.builtin.package:
         name: "{{ item }}"
@@ -26,18 +39,38 @@
         - python3-pip
         - python3-venv
         - pipx
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      become: 'yes'
+
+    - name: install common tools macos
+      community.general.homebrew:
+        name: "{{ item }}"
+      loop:
+        - git
+        - tmux
+        - neovim
+        - ripgrep
+        - fzf
+        - zsh
+        - python3
+        - pipx
+      when: ansible_os_family == 'Darwin'
 
     - name: create users
       ansible.builtin.user:
         name: "{{ user.username }}"
         shell: "/bin/{{ user.default_shell }}"
         groups: sudo
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      become: 'yes'
 
     - name: set authorized keys
       ansible.posix.authorized_key:
         user: "{{ user.username }}"
         state: present
         key: "{{ user.ssh_pub_key }}"
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      become: 'yes'
 
     - name: allow passwordless sudo
       ansible.builtin.lineinfile:
@@ -46,6 +79,8 @@
         regexp: '^%sudo'
         line: '%sudo ALL=(ALL) NOPASSWD: ALL'
         validate: 'visudo -cf %s'
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      become: 'yes'
 
     - name: add email to git config
       community.general.git_config:
@@ -63,7 +98,7 @@
 
     - name: check for omz installation
       ansible.builtin.stat:
-        path: "/home/{{ user.username }}/.oh-my-zsh"
+        path: "{{ home_path }}/.oh-my-zsh"
       register: omz
 
     - name: install oh-my-zsh
@@ -103,12 +138,12 @@
         owner: root
         group: root
         mode: '644'
-      when: user.default_shell == "bash"
+      when: user.default_shell == "bash" and ansible_os_family == "Ubuntu"
 
     - name: install git bash prompt for existing users
       ansible.builtin.git:
         repo: https://github.com/magicmonty/bash-git-prompt.git
-        dest: "/home/{{ user.username }}/.bash-git-prompt"
+        dest: "{{ home_path }}/.bash-git-prompt"
         depth: 1
       when: user.default_shell == "bash"
 
@@ -124,58 +159,57 @@
         owner: root
         group: root
         mode: '644'
-      when: user.default_shell == "bash"
+      when: user.default_shell == "bash" and ansible_os_family == "Ubuntu"
 
     - name: create vim plug directory
       ansible.builtin.file:
-        path: "/home/{{ user.username }}/.local/share/nvim/site/autoload/"
+        path: "{{ home_path }}/.local/share/nvim/site/autoload/"
         state: directory
         owner: "{{ user.username }}"
-        group: "{{ user.username }}"
+        group: "{{ group_name }}"
 
     - name: install vim plug for neovim
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        dest: "/home/{{ user.username }}/.local/share/nvim/site/autoload/plug.vim"
+        dest: "{{ home_path }}/.local/share/nvim/site/autoload/plug.vim"
         owner: "{{ user.username }}"
-        group: "{{ user.username }}"
+        group: "{{ group_name }}"
 
     - name: make nvim config directory
       ansible.builtin.file:
-        path: "/home/{{ user.username }}/.config/nvim/"
+        path: "{{ home_path }}/.config/nvim/"
         state: directory
         owner: "{{ user.username }}"
-        group: "{{ user.username }}"
+        group: "{{ group_name }}"
 
     - name: clone dotfiles
       ansible.builtin.git:
         repo: https://github.com/swysocki/dotfiles
-        dest: "/home/{{ user.username }}/devel/repos/dotfiles"
+        dest: "{{ home_path }}/devel/repos/dotfiles"
         depth: 1
       become_user: "{{ user.username }}"
 
     - name: link neovim config
       ansible.builtin.file:
-        src: "/home/{{ user.username }}/devel/repos/dotfiles/.config/nvim/init.vim"
-        dest: "/home/{{ user.username }}/.config/nvim/init.vim"
+        src: "{{ home_path }}/devel/repos/dotfiles/.config/nvim/init.vim"
+        dest: "{{ home_path }}/.config/nvim/init.vim"
         owner: "{{ user.username }}"
-        group: "{{ user.username }}"
+        group: "{{ group_name }}"
         state: link
 
     - name: link tmux config
       ansible.builtin.file:
-        src: "/home/{{ user.username }}/devel/repos/dotfiles/.tmux.conf"
-        dest: "/home/{{ user.username }}/.tmux.conf"
+        src: "{{ home_path }}/devel/repos/dotfiles/.tmux.conf"
+        dest: "{{ home_path }}/.tmux.conf"
         owner: "{{ user.username }}"
-        group: "{{ user.username }}"
+        group: "{{ group_name }}"
         state: link
 
     - name: link zsh config
       ansible.builtin.file:
-        src: "/home/{{ user.username }}/devel/repos/dotfiles/.zshrc"
-        dest: "/home/{{ user.username }}/.zshrc"
+        src: "{{ home_path }}/devel/repos/dotfiles/.zshrc"
+        dest: "{{ home_path }}/.zshrc"
         owner: "{{ user.username }}"
-        group: "{{ user.username }}"
+        group: "{{ group_name }}"
         state: link
         force: yes
-
