@@ -10,6 +10,7 @@ autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 call plug#begin('~/.local/share/nvim/plugged')
   Plug 'kaicataldo/material.vim', { 'branch': 'main' }
   Plug 'tpope/vim-fugitive'
+  Plug 'dense-analysis/ale'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
@@ -19,6 +20,20 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/nvim-cmp'
 call plug#end()
+
+let g:ale_fixers = {
+\  'python' :['isort', 'black'],
+\  'sh' :['shfmt']
+\}
+let g:ale_linters = {
+\  'python' :['flake8']
+\}
+let g:ale_fix_on_save = 1
+let g:ale_python_flake8_options = '--max-line-length=88'
+let g:ale_sh_shfmt_options = '-ci -i 4'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+
 set completeopt=menu,menuone,noselect
 colorscheme material
 
@@ -39,7 +54,9 @@ cmp.setup({
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      -- Accept currently selected item. Set `select` to `false`
+      -- to only confirm explicitly selected items.
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
