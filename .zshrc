@@ -74,11 +74,6 @@ plugins=(git fzf zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
-# Non oh-my-zsh plugins
-# use https://github.com/zsh-git-prompt/zsh-git-prompt by cloning
-# to the .zsh_plugins dir
-source ~/.zsh_plugins/zsh-git-prompt/zshrc.sh
-PROMPT+='$(git_super_status) %# '
 #
 #PROMPT="$fg[blue]%}%m $PROMPT"
 # User configuration
