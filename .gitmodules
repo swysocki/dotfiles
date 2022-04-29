@@ -1,3 +1,0 @@
-[submodule ".zsh_plugins/zsh-git-prompt"]
-	path = .zsh_plugins/zsh-git-prompt
-	url = https://github.com/starcraftman/zsh-git-prompt
