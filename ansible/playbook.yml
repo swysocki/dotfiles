@@ -38,7 +38,6 @@
         - acl
         - python3-pip
         - python3-venv
-        - pipx
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
       become: 'yes'
 
@@ -115,6 +114,18 @@
       become_user: "{{ user.username }}"
       when: user.default_shell == "zsh"
 
+    - name: install pipx using pip
+      ansible.builtin.pip:
+        name: pipx
+        extra_args: --user
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+    - name: ensure pipx path
+      ansible.builtin.shell:
+        cmd: python3 -m pipx ensurepath
+        executable: pip3
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
     - name: add pipx packages
       ansible.builtin.shell:
         cmd: "pipx install {{ item }}"
@@ -125,7 +136,6 @@
         - pytest
         - black
         - flake8
-        - pyls
         - poetry
 
     - name: add fzf settings for bash
