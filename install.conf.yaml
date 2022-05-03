@@ -1,0 +1,22 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+  - command: |
+      test -d "$HOME/.oh-my-zsh" || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    description: Install Oh-My-Zsh
+    stdout: true
+    stderr: true
+
+- link:
+    ~/.zshrc: config/zshrc
+    ~/.tmux.conf: config/tmux.conf
+    ~/.config/nvim/init.vim: config/init.vim
+    ~/.yamllint.yml: config/yamllint.yml
+    ~/.hadolint.yml: config/hadolint.yml
+    ~/.oh-my-zsh/custom/alias.zsh: config/alias.zsh
+
