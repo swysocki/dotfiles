@@ -12,10 +12,6 @@
     description: Install Oh-My-Zsh
     stdout: true
     stderr: true
-  - command: brew bundle
-    description: Install Homebrew Packages
-    stdout: true
-    stderr: true
 
 - link:
     ~/.zshrc: config/zshrc
@@ -24,3 +20,11 @@
     ~/.yamllint.yml: config/yamllint.yml
     ~/.hadolint.yml: config/hadolint.yml
     ~/.oh-my-zsh/custom/alias.zsh: config/alias.zsh
+
+- brewfile:
+    - macos/Brewfile
+
+- pipx:
+    file: python/requirements-pipx.txt
+    stdout: false
+    stderr: true
