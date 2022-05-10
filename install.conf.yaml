@@ -20,6 +20,7 @@
     ~/.yamllint.yml: config/yamllint.yml
     ~/.hadolint.yml: config/hadolint.yml
     ~/.oh-my-zsh/custom/alias.zsh: config/alias.zsh
+    ~/.config/wezterm/wezterm.lua: config/wezterm.lua
 
 - brewfile:
     - macos/Brewfile

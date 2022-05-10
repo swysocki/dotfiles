@@ -8,7 +8,7 @@ autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 expandtab
 autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 call plug#begin('~/.local/share/nvim/plugged')
-  Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+  Plug 'ellisonleao/gruvbox.nvim'
   Plug 'tpope/vim-fugitive'
   Plug 'dense-analysis/ale'
   Plug 'nvim-lua/plenary.nvim'
@@ -20,6 +20,8 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/nvim-cmp'
 call plug#end()
+
+colorscheme gruvbox
 
 let g:ale_fixers = {
 \  'python' :['isort', 'black'],
@@ -35,7 +37,6 @@ let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 1
 
 set completeopt=menu,menuone,noselect
-colorscheme material
 
 " set folds
 set foldmethod=expr
