@@ -16,11 +16,15 @@
 - link:
     ~/.zshrc: config/zshrc
     ~/.tmux.conf: config/tmux.conf
-    ~/.config/nvim/init.vim: config/init.vim
+    ~/.config/nvim/init.vim:
+      path: config/init.vim
+      create: true
     ~/.yamllint.yml: config/yamllint.yml
     ~/.hadolint.yml: config/hadolint.yml
     ~/.oh-my-zsh/custom/alias.zsh: config/alias.zsh
-    ~/.config/wezterm/wezterm.lua: config/wezterm.lua
+    ~/.config/wezterm/wezterm.lua:
+      path: config/wezterm.lua
+      create: true
 
 - brewfile:
     - macos/Brewfile
