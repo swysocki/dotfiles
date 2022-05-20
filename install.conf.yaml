@@ -29,8 +29,11 @@
       path: config/wezterm.lua
       create: true
 
-- shell:
-    - command: git clone https://github.com/wfxr/forgit ~/.oh-my-zsh/custom/plugins/forgit
+- git:
+    '~/.oh-my-zsh/custom/plugins/forgit':
+      url: 'https://github.com/wfxr/forgit'
+    '~/.oh-my-zsh/custom/plugins/zsh-autosuggestions':
+      url: 'https://github.com/zsh-users/zsh-autosuggestions'
 
 - pipx:
     file: python/requirements-pipx.txt
