@@ -6,12 +6,15 @@
 - clean: ['~']
 
 - shell:
-  - [git submodule update --init --recursive, Installing submodules]
-  - command: |
-      test -d "$HOME/.oh-my-zsh" || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    description: Install Oh-My-Zsh
-    stdout: true
-    stderr: true
+    - [git submodule update --init --recursive, Installing submodules]
+    - command: |
+        test -d "$HOME/.oh-my-zsh" || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      description: Install Oh-My-Zsh
+      stdout: true
+      stderr: true
+
+- brewfile:
+    - macos/Brewfile
 
 - link:
     ~/.zshrc: config/zshrc
@@ -26,8 +29,8 @@
       path: config/wezterm.lua
       create: true
 
-- brewfile:
-    - macos/Brewfile
+- shell:
+    - command: git clone https://github.com/wfxr/forgit ~/.oh-my-zsh/custom/plugins/forgit
 
 - pipx:
     file: python/requirements-pipx.txt
