@@ -19,6 +19,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/nvim-cmp'
+  Plug 'lewis6991/gitsigns.nvim'
 call plug#end()
 
 colorscheme gruvbox
@@ -44,6 +45,7 @@ set foldexpr=nvim_treesitter#foldexpr()
 set foldminlines=5
 
 lua <<EOF
+require('gitsigns').setup()
 local cmp = require'cmp'
 cmp.setup({
     window = {
