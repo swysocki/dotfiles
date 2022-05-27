@@ -46,6 +46,7 @@ set foldminlines=5
 
 lua <<EOF
 require('gitsigns').setup()
+
 local cmp = require'cmp'
 cmp.setup({
     window = {
@@ -67,6 +68,21 @@ cmp.setup({
       { name = 'buffer' },
     })
   })
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
+
+require('lspconfig').terraformls.setup {
+  capabilities = capabilities
+}
+
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
@@ -76,6 +92,7 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
 }
+
 require('lspconfig').pyright.setup{}
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)

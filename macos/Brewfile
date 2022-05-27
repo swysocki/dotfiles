@@ -1,3 +1,5 @@
+tap "hashicorp/tap"
+brew "terraform-ls"
 brew "bash"
 brew "colima"
 brew "fzf"
