@@ -83,6 +83,8 @@ require('lspconfig').terraformls.setup {
   capabilities = capabilities
 }
 
+require('gitsigns').setup()
+
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
