@@ -22,7 +22,9 @@
     ~/.config/nvim/init.vim:
       path: config/init.vim
       create: true
-    ~/.yamllint.yml: config/yamllint.yml
+    ~/.config/yamllint/config:
+      path: config/yamllint.yml
+      create: true
     ~/.hadolint.yml: config/hadolint.yml
     ~/.oh-my-zsh/custom/alias.zsh: config/alias.zsh
     ~/.config/wezterm/wezterm.lua:
