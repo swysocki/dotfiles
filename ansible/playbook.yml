@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: all
   become: 'no'
   vars:
     user:
@@ -114,28 +114,32 @@
       become_user: "{{ user.username }}"
       when: user.default_shell == "zsh" and not omz.stat.exists
 
-    - name: install auto-suggestion plugin
+    - name: install zsh plugins
       ansible.builtin.git:
-        repo: https://github.com/zsh-users/zsh-autosuggestions
-        dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+        repo: "{{ item.project }}"
+        dest: "~/.oh-my-zsh/custom/plugins/{{ item.proj_name }}"
       become_user: "{{ user.username }}"
       when: user.default_shell == "zsh"
+      with_items:
+        - { proj_name: "zsh-autosuggestions", project: "https://github.com/zsh-users/zsh-autosuggestions.git" }
+        - { proj_name: "forgit", project: "https://github.com/wfxr/forgit.git" }
 
     - name: install pipx using pip
       ansible.builtin.pip:
         name: pipx
         extra_args: --user
+      become_user: "{{ user.username }}"
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     - name: ensure pipx path
       ansible.builtin.shell:
         cmd: python3 -m pipx ensurepath
-        executable: pip3
+      become_user: "{{ user.username }}"
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     - name: add pipx packages
       ansible.builtin.shell:
-        cmd: "pipx install {{ item }}"
+        cmd: "{{ home_path }}/.local/bin/pipx install {{ item }}"
       become_user: "{{ user.username }}"
       ignore_errors: yes
       loop:
@@ -216,6 +220,7 @@
         dest: "{{ home_path }}/{{ item.destination }}"
         owner: "{{ user.username }}"
         group: "{{ group_name }}"
+        force: yes
         state: link
       with_items:
         - { source: 'config/init.vim', destination: '.config/nvim/init.vim' }
