@@ -15,12 +15,14 @@
       set_fact:
         home_path: "/home/{{ user.username }}"
         group_name: "{{ user.username }}"
+        pipx_path: "{{ home_path }}/.local/bin/pipx"
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     - name: set variables for Mac
       set_fact:
         home_path: "/Users/{{ user.username }}"
         group_name: staff
+        pipx_path: "/usr/local/bin/pipx"
       when: ansible_os_family == "Darwin"
 
     - name: install common tools
@@ -145,7 +147,7 @@
 
     - name: add pipx packages
       ansible.builtin.shell:
-        cmd: "{{ home_path }}/.local/bin/pipx install {{ item }}"
+        cmd: "{{ pipx_path }} install {{ item }}"
       become_user: "{{ user.username }}"
       ignore_errors: yes
       loop:
