@@ -31,7 +31,6 @@
         - fzf
         - git
         - htop
-        - neovim
         - python3-pip
         - python3-venv
         - ripgrep
@@ -39,6 +38,13 @@
         - virtualenv
         - zsh
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      become: 'yes'
+
+    - name: install tools with snap
+      community.general.snap:
+        name: nvim
+        classic: 'yes'
+      when: ansible_distribution == "Ubuntu"
       become: 'yes'
 
     - name: install common tools macos
@@ -148,6 +154,7 @@
         - black
         - flake8
         - poetry
+        - pyright
 
     - name: add fzf settings for bash
       ansible.builtin.copy:
