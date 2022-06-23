@@ -1,0 +1,25 @@
+- name: set variables for Mac
+  set_fact:
+    home_path: "/Users/{{ user.username }}"
+    group_name: staff
+    pipx_path: "/opt/homebrew/bin/pipx"
+
+- name: install common tools macos
+  community.general.homebrew:
+    name: "{{ item }}"
+  loop:
+    - bash
+    - fzf
+    - git
+    - hadolint
+    - jq
+    - neovim
+    - pipx
+    - python3
+    - ripgrep
+    - tmux
+    - shellcheck
+    - shfmt
+    - tree-sitter
+    - yamllint
+    - zsh

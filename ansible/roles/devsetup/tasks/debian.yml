@@ -1,0 +1,85 @@
+- name: set variables for Linux
+  set_fact:
+    home_path: "/home/{{ user.username }}"
+    group_name: "{{ user.username }}"
+    pipx_path: "{{ home_path }}/.local/bin/pipx"
+
+- name: install common tools
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop:
+    - acl
+    - fzf
+    - git
+    - htop
+    - python3-pip
+    - python3-venv
+    - ripgrep
+    - tmux
+    - virtualenv
+    - zsh
+  become: 'yes'
+
+- name: install tools with snap
+  community.general.snap:
+    name: nvim
+    classic: 'yes'
+  when: ansible_distribution == "Ubuntu"
+  become: 'yes'
+- name: create users
+  ansible.builtin.user:
+    name: "{{ user.username }}"
+    shell: "/bin/{{ user.default_shell }}"
+    groups: sudo
+  become: 'yes'
+
+- name: set authorized keys
+  ansible.posix.authorized_key:
+    user: "{{ user.username }}"
+    state: present
+    key: "{{ user.ssh_pub_key }}"
+  become: 'yes'
+
+- name: allow passwordless sudo
+  ansible.builtin.lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+  become: 'yes'
+
+- name: install pipx using pip
+  ansible.builtin.pip:
+    name: pipx
+    extra_args: --user
+  become_user: "{{ user.username }}"
+
+- name: ensure pipx path
+  ansible.builtin.shell:
+    cmd: python3 -m pipx ensurepath
+  become_user: "{{ user.username }}"
+
+- name: add git bash prompt to bashrc
+  ansible.builtin.copy:
+    dest: /etc/profile.d/git-bash-prompt.sh
+    content: |
+      if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+        GIT_PROMPT_ONLY_IN_REPO=1
+        GIT_PROMPT_THEME=Single_line_Minimalist
+        source $HOME/.bash-git-prompt/gitprompt.sh
+      fi
+    owner: root
+    group: root
+    mode: '644'
+
+- name: add fzf settings for bash
+  ansible.builtin.copy:
+    dest: /etc/profile.d/fzf.sh
+    content: |
+      #!/bin/bash
+      source /usr/share/doc/fzf/examples/key-bindings.bash
+      source /usr/share/doc/fzf/examples/completion.bash
+    owner: root
+    group: root
+    mode: '644'
