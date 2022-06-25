@@ -20,6 +20,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/nvim-cmp'
   Plug 'lewis6991/gitsigns.nvim'
+  Plug 'kyazdani42/nvim-tree.lua' " requires a patched font from nerdfonts
 call plug#end()
 
 colorscheme gruvbox
@@ -45,8 +46,8 @@ set foldexpr=nvim_treesitter#foldexpr()
 set foldminlines=5
 
 lua <<EOF
+require('nvim-tree').setup()
 require('gitsigns').setup()
-
 local cmp = require'cmp'
 cmp.setup({
     window = {
@@ -101,17 +102,7 @@ vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<C
 vim.api.nvim_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 EOF
 
-" Setup the file explorer (netrw)
-let g:netrw_banner = 0
-let g:netrw_winsize = 20
-let g:netrw_browse_split = 4
-let g:netrw_liststyle = 3
-
-" Toggle netrw
-function! ToggleExplorer()
-  Lexplore
-endfunction
-map <silent> <F6> :call ToggleExplorer() <CR>
+map <F6> :NvimTreeToggle <CR>
 
 " Find files using Telescope command-line
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
