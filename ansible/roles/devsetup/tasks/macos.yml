@@ -13,6 +13,7 @@
     - git
     - hadolint
     - jq
+    - luarocks
     - neovim
     - pipx
     - python3
