@@ -46,6 +46,7 @@ require("null-ls").setup({
         require("null-ls").builtins.formatting.black,
         require("null-ls").builtins.formatting.shfmt,
         require("null-ls").builtins.formatting.lua_format,
+	require("null-ls").builtins.formatting.isort, 
 	require("null-ls").builtins.diagnostics.yamllint,
         require("null-ls").builtins.diagnostics.shellcheck,
         require("null-ls").builtins.diagnostics.flake8.with({
