@@ -104,7 +104,7 @@
     force: yes
     state: link
   with_items:
-    - {source: 'config/init.vim', destination: '.config/nvim/init.vim'}
+    - {source: 'config/init.lua', destination: '.config/nvim/init.lua'}
     - {source: 'config/tmux.conf', destination: '.tmux.conf'}
     - {source: 'config/zshrc', destination: '.zshrc'}
     - {source: 'config/yamllint.yml', destination: '.config/yamllint/config'}
