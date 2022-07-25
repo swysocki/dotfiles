@@ -18,7 +18,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = 'TSUpdate'})
-Plug 'google/vim-jsonnet'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
