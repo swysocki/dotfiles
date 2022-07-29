@@ -12,3 +12,9 @@ alias tmn='tmux new -s'
 # docker
 alias dorn='docker run --rm -it'
 
+# git worktree
+alias gwtl='git worktree list'
+alias gwta='git worktree add'
+alias gwtr='git worktree remove'
+alias gwtrF='git worktree remove --force'
+
