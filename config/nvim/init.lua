@@ -28,13 +28,9 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 vim.call('plug#end')
 
 vim.cmd [[
-autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType sh setlocal ts=4 sts=4 sw=4 expandtab
 autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 
 colorscheme gruvbox
-
-set completeopt=menu,menuone,noselect
 
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
@@ -85,20 +81,18 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {'documentation', 'detail', 'additionalTextEdits'}
 }
+local opts = {noremap = true, silent = true}
+vim.api.nvim_set_keymap('', '<F6>', ':NvimTreeToggle <CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>ff', ':Telescope find_files <CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep <CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', opts)
 
 local on_attach = function(client, bufnr)
-    local opts = {noremap = true, silent = true}
     vim.api.nvim_set_keymap('n', '<space>e',
                             '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     vim.api.nvim_set_keymap('n', '<space>rn',
                             '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_set_keymap('', '<F6>', ':NvimTreeToggle <CR>', {})
-    vim.api.nvim_set_keymap('n', '<leader>ff', ':Telescope find_files <CR>',
-                            opts)
-    vim.api
-        .nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep <CR>', opts)
-    vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', opts)
-    vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', opts)
     vim.api.nvim_set_keymap('n', '<leader>bn', ':bn<cr>', opts)
     vim.api.nvim_set_keymap('n', '<leader>bp', ':bp<cr>', opts)
     vim.api.nvim_set_keymap('n', '<space>f',
