@@ -1,14 +1,15 @@
-vim.opt.number = true
-vim.opt.cursorline = true
-vim.opt.list = true
-vim.opt.listchars = {
+local o = vim.opt
+o.number = true
+o.cursorline = true
+o.list = true
+o.listchars = {
     tab = '▸ ',
     trail = '·',
     precedes = '←',
     extends = '→',
     eol = '↵'
 }
-vim.opt.updatetime = 300
+o.updatetime = 300
 vim.g.mapleader = ','
 
 local Plug = vim.fn['plug#']
