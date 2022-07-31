@@ -13,10 +13,8 @@
     - git
     - hadolint
     - jq
-    - luarocks
     - neovim
-    - pipx
-    - python3
+    - python@3.8
     - ripgrep
     - tmux
     - shellcheck

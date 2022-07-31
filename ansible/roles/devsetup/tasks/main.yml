@@ -43,11 +43,13 @@
     - {proj_name: "zsh-autosuggestions", project: "https://github.com/zsh-users/zsh-autosuggestions.git"}
     - {proj_name: "forgit", project: "https://github.com/wfxr/forgit.git"}
 
-- name: add pipx packages
-  ansible.builtin.shell:
-    cmd: "{{ pipx_path }} install {{ item }}"
+# pipx pulls in the python@3.10 dependency via Homebrew
+# use pip and the --user flag to only install 3.8
+- name: add pip packages
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    extra_args: "--user"
   become_user: "{{ user.username }}"
-  ignore_errors: yes
   loop:
     - isort
     - pytest
