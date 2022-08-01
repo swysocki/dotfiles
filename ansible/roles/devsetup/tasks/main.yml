@@ -51,6 +51,7 @@
     extra_args: "--user"
   become_user: "{{ user.username }}"
   loop:
+    - neovim
     - isort
     - pytest
     - black
