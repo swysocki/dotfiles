@@ -96,6 +96,7 @@
     repo: https://github.com/swysocki/dotfiles
     dest: "{{ home_path }}/{{ repos_path }}/dotfiles"
     depth: 1
+    force: yes
   become_user: "{{ user.username }}"
 
 - name: link configs
