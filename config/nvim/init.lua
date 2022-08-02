@@ -93,6 +93,7 @@ vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', opts)
 
 local on_attach = function(client, bufnr)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.api.nvim_set_keymap('n', '<space>e',
                             '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     vim.api.nvim_set_keymap('n', '<space>rn',
