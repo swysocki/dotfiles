@@ -26,6 +26,7 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'google/vim-jsonnet'
 vim.call('plug#end')
 
 vim.cmd [[
