@@ -12,6 +12,7 @@
     - fzf
     - git
     - hadolint
+    - jsonnet
     - jq
     - neovim
     - python@3.8
