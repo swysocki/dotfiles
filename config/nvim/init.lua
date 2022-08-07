@@ -12,6 +12,16 @@ o.listchars = {
 o.updatetime = 300
 vim.g.mapleader = ','
 
+vim.filetype.add({
+  extension = {
+    jsonnet = "jsonnet",
+    libsonnet = "jsonnet",
+  },
+  pattern = {
+    ["*.jsonnet.TEMPLATE"] = "jsonnet"
+  }
+})
+
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.local/share/nvim/plugged')
 Plug 'ellisonleao/gruvbox.nvim'
@@ -92,6 +102,8 @@ vim.api.nvim_set_keymap('n', '<leader>ff', ':Telescope find_files <CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep <CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>bn', ':bn<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>bp', ':bp<cr>', opts)
 
 local on_attach = function(client, bufnr)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
@@ -99,8 +111,6 @@ local on_attach = function(client, bufnr)
                             '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     vim.api.nvim_set_keymap('n', '<space>rn',
                             '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_set_keymap('n', '<leader>bn', ':bn<cr>', opts)
-    vim.api.nvim_set_keymap('n', '<leader>bp', ':bp<cr>', opts)
     vim.api.nvim_set_keymap('n', '<space>f',
                             '<cmd>lua vim.lsp.buf.formatting_sync(nil, 10000)<cr>',
                             opts)
@@ -110,7 +120,7 @@ require('lspconfig').pyright.setup {
     on_attach = on_attach,
     capabilities = capabilities
 }
-require('lspconfig').terraformls.setup {
+require('lspconfig').jsonnet_ls.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
