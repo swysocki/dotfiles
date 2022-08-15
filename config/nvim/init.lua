@@ -37,6 +37,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'google/vim-jsonnet'
+Plug 'feline-nvim/feline.nvim'
 vim.call('plug#end')
 
 vim.cmd [[
@@ -48,6 +49,9 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldminlines=5
 ]]
+
+require('feline').setup()
+
 require("null-ls").setup({
     sources = {
         require("null-ls").builtins.formatting.black,
