@@ -1,16 +1,5 @@
-local o = vim.opt
-o.number = true
-o.cursorline = true
-o.list = true
-o.listchars = {
-    tab = '▸ ',
-    trail = '·',
-    precedes = '←',
-    extends = '→',
-    eol = '↵'
-}
-o.updatetime = 300
-vim.g.mapleader = ','
+require('keymaps')
+require('options')
 
 vim.filetype.add({
   extension = {
@@ -44,10 +33,6 @@ vim.cmd [[
 autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 
 colorscheme gruvbox
-
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldminlines=5
 ]]
 
 require('feline').setup()
@@ -100,14 +85,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {'documentation', 'detail', 'additionalTextEdits'}
 }
-local opts = {noremap = true, silent = true}
-vim.api.nvim_set_keymap('', '<F6>', ':NvimTreeToggle <CR>', {})
-vim.api.nvim_set_keymap('n', '<leader>ff', ':Telescope find_files <CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>fg', ':Telescope live_grep <CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>fh', ':Telescope help_tags<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>bn', ':bn<cr>', opts)
-vim.api.nvim_set_keymap('n', '<leader>bp', ':bp<cr>', opts)
 
 local on_attach = function(client, bufnr)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
