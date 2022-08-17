@@ -87,14 +87,14 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 local on_attach = function(client, bufnr)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, km_opts)
     vim.api.nvim_set_keymap('n', '<space>e',
-                            '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+                            '<cmd>lua vim.diagnostic.open_float()<CR>', km_opts)
     vim.api.nvim_set_keymap('n', '<space>rn',
-                            '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+                            '<cmd>lua vim.lsp.buf.rename()<CR>', km_opts)
     vim.api.nvim_set_keymap('n', '<space>f',
                             '<cmd>lua vim.lsp.buf.formatting_sync(nil, 10000)<cr>',
-                            opts)
+                            km_opts)
 end
 
 require('lspconfig').pyright.setup {

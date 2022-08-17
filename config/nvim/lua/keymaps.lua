@@ -3,12 +3,12 @@
 vim.g.mapleader = ','
 
 -- stolen from https://github.com/brainfucksec/neovim-lua/blob/main/nvim/lua/core/keymaps.lua
-local function map(mode, lhs, rhs)
-  local options = {noremap = true, silent = true}
+km_opts = {noremap = true, silent = true}
+local function map(mode, lhs, rhs, opts)
   if opts then
-    options = vim.tbl_extend('force', options, opts)
+    options = vim.tbl_extend('force', km_opts, opts)
   end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  vim.api.nvim_set_keymap(mode, lhs, rhs, km_opts)
 end
 
 map('', '<F6>', ':NvimTreeToggle<CR>', {})
