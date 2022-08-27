@@ -11,22 +11,30 @@
     name: "{{ item }}"
   loop:
     - acl
+    - fd-find
     - fzf
     - git
     - htop
     - jsonnet
+    - nodejs
     - python3-pip
     - python3-venv
     - ripgrep
+    - shellcheck
     - tmux
     - virtualenv
     - zsh
 
 - name: install tools with snap
   community.general.snap:
-    name: nvim
-    classic: 'yes'
+    name: "{{ item.name }}"
+    classic: "{{ item.classic }}"
   when: ansible_distribution == "Ubuntu"
+  loop:
+    - name: "nvim"
+      classic: "yes"
+    - name: "shfmt"
+      classic: "no"
 
 - name: create users
   ansible.builtin.user:
@@ -53,9 +61,3 @@
     name: pipx
     extra_args: --user
   become_user: "{{ user.username }}"
-
-# - name: ensure pipx path
-#   ansible.builtin.shell:
-#     cmd: python3 -m pipx ensurepath
-#   become: 'yes'
-#   become_user: "{{ user.username }}"
