@@ -117,10 +117,6 @@ timezsh() {
 export GEM_HOME="$HOME/.gem"
 export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
 
-# set the Python path for packages installed with --user
-PYTHON_VERSION="3.8"
-export PATH="$HOME/Library/Python/$PYTHON_VERSION/bin:$PATH"
-export PATH="/opt/homebrew/opt/python@$PYTHON_VERSION/bin:$PATH"
-
 export PATH="/usr/local/opt/binutils/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
+export PATH="$HOME/.local/bin"

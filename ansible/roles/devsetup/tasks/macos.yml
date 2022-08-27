@@ -1,8 +1,9 @@
 ---
 - name: set variables for Mac
   set_fact:
-    home_path: "/Users/{{ user.username }}"
     group_name: staff
+    home_path: "/Users/{{ user.username }}"
+    pip_version: "pip{{ python_version }}"
     pipx_path: "{{ homebrew_path[ansible_architecture] }}/pipx"
   vars:
     homebrew_path:

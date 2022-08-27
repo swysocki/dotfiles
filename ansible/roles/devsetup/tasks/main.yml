@@ -59,12 +59,13 @@
 - name: install neovim python package globally
   ansible.builtin.pip:
     name: pynvim
-    executable: "pip{{ python_version }}"
+    executable: "{{ pip_version }}"
 
 - name: remove pipx packages
   community.general.pipx:
     name: pyright
     executable: "{{ pipx_path }}"
+  become_user: "{{ user.username }}"
 
 - name: create vim plug directory
   ansible.builtin.file:
