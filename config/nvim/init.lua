@@ -35,6 +35,19 @@ autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 colorscheme gruvbox
 ]]
 
+local sign = function(opts)
+  vim.fn.sign_define(opts.name, {
+    texthl = opts.name,
+    text = opts.text,
+    numhl = ''
+  })
+end
+
+sign({name = 'DiagnosticSignError', text = '✘'})
+sign({name = 'DiagnosticSignWarn', text = '▲'})
+sign({name = 'DiagnosticSignHint', text = '⚑'})
+sign({name = 'DiagnosticSignInfo', text = ''})
+
 require('feline').setup()
 
 require("null-ls").setup({
