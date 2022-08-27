@@ -7,7 +7,7 @@
     pipx_path: "{{ homebrew_path[ansible_architecture] }}/pipx"
   vars:
     homebrew_path:
-      aarch64: "/opt/homebrew/bin"
+      arm64: "/opt/homebrew/bin"
       x86_64: "/usr/local/bin/"
 
 - name: install common tools macos
