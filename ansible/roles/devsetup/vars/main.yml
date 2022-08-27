@@ -6,3 +6,4 @@ user:
   email: "swysocki@gmail.com"
   name: "Scott Wysocki"
 repos_path: "devel/repos"
+python_version: "3.8"

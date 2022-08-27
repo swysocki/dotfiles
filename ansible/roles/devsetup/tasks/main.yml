@@ -43,28 +43,28 @@
     - {proj_name: "zsh-autosuggestions", project: "https://github.com/zsh-users/zsh-autosuggestions.git"}
     - {proj_name: "forgit", project: "https://github.com/wfxr/forgit.git"}
 
-# pipx pulls in the python@3.10 dependency via Homebrew
-# use pip and the --user flag to only install 3.8
-- name: add pip packages
-  ansible.builtin.pip:
+- name: add pipx packages
+  community.general.pipx:
     name: "{{ item }}"
-    extra_args: "--user"
+    executable: "{{ pipx_path }}"
   become_user: "{{ user.username }}"
   loop:
-    - neovim
-    - isort
-    - pytest
     - black
     - flake8
+    - isort
     - poetry
-    - pyright
+    - pytest
+    - yamllint
 
-- name: install git bash prompt for existing users
-  ansible.builtin.git:
-    repo: https://github.com/magicmonty/bash-git-prompt.git
-    dest: "{{ home_path }}/.bash-git-prompt"
-    depth: 1
-  when: user.default_shell == "bash"
+- name: install neovim python package globally
+  ansible.builtin.pip:
+    name: pynvim
+    executable: "pip{{ python_version }}"
+
+- name: remove pipx packages
+  community.general.pipx:
+    name: pyright
+    executable: "{{ pipx_path }}"
 
 - name: create vim plug directory
   ansible.builtin.file:
@@ -96,7 +96,6 @@
     repo: https://github.com/swysocki/dotfiles
     dest: "{{ home_path }}/{{ repos_path }}/dotfiles"
     depth: 1
-    force: yes
   become_user: "{{ user.username }}"
 
 - name: link configs

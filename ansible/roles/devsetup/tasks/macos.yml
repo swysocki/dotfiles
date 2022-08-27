@@ -1,3 +1,4 @@
+---
 - name: set variables for Mac
   set_fact:
     home_path: "/Users/{{ user.username }}"
@@ -12,14 +13,17 @@
     - fzf
     - git
     - hadolint
-    - jsonnet
     - jq
+    - jsonnet
     - neovim
-    - python@3.8
+    - pipx
+    - pyright
+    - python@{{ python_version }}
     - ripgrep
-    - tmux
     - shellcheck
     - shfmt
+    - tmux
     - tree-sitter
+    - virtualenv
     - yamllint
     - zsh

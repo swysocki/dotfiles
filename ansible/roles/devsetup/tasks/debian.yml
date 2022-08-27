@@ -1,3 +1,8 @@
+---
+- name: help message
+  debug:
+    - msg: "Broken, probably, fix before relying on me!"
+
 - name: set variables for Linux
   set_fact:
     group_name: "{{ user.username }}"
@@ -57,27 +62,3 @@
     cmd: python3 -m pipx ensurepath
   become: 'yes'
   become_user: "{{ user.username }}"
-
-- name: add git bash prompt to bashrc
-  ansible.builtin.copy:
-    dest: /etc/profile.d/git-bash-prompt.sh
-    content: |
-      if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
-        GIT_PROMPT_ONLY_IN_REPO=1
-        GIT_PROMPT_THEME=Single_line_Minimalist
-        source $HOME/.bash-git-prompt/gitprompt.sh
-      fi
-    owner: root
-    group: root
-    mode: '644'
-
-- name: add fzf settings for bash
-  ansible.builtin.copy:
-    dest: /etc/profile.d/fzf.sh
-    content: |
-      #!/bin/bash
-      source /usr/share/doc/fzf/examples/key-bindings.bash
-      source /usr/share/doc/fzf/examples/completion.bash
-    owner: root
-    group: root
-    mode: '644'
