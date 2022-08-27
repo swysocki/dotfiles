@@ -3,7 +3,7 @@ user:
   username: "swysocki"
   ssh_pub_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlnFHI5swpZl5FG+BINqcr0TcAuOhYl9isMxgGyXkFU primary"
   default_shell: "zsh"
-  email: "swysocki@gmail.com"
+  email: "{{ git_email }}"
   name: "Scott Wysocki"
 repos_path: "devel/repos"
 python_version: "3.8"

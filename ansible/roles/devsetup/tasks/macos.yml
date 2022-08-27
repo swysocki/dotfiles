@@ -3,7 +3,11 @@
   set_fact:
     home_path: "/Users/{{ user.username }}"
     group_name: staff
-    pipx_path: "/opt/homebrew/bin/pipx"
+    pipx_path: "{{ homebrew_path[ansible_architecture] }}/pipx"
+  vars:
+    homebrew_path:
+      aarch64: "/opt/homebrew/bin"
+      x86_64: "/usr/local/bin/"
 
 - name: install common tools macos
   community.general.homebrew:
