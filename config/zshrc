@@ -101,7 +101,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias mp="multipass"
 
 # enable fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -109,6 +108,10 @@ alias mp="multipass"
 # Workaround for direnv PS1 prompt with virtualenv
 setopt PROMPT_SUBST
 
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
 
 # Create a personal dir for Gems
 export GEM_HOME="$HOME/.gem"
