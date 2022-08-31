@@ -1,6 +1,7 @@
 local o = vim.opt
 o.number = true
 o.cursorline = true
+o.foldenable = false
 o.list = true
 
 -- whitespace symbols

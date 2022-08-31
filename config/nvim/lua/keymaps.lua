@@ -13,11 +13,13 @@ end
 
 map('', '<F6>', ':NvimTreeToggle<CR>', {})
 
+-- telescope
 map('n', '<leader>ff', ':Telescope find_files<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>fb', ':Telescope buffers<CR>')
 map('n', '<leader>fh', ':Telescope help_tags<CR>')
 
+-- buffers
 map('n', '<leader>bn', ':bn<CR>')
 map('n', '<leader>bp', ':bp<CR>')
 map('n', '<leader>bd', ':bd<CR>')

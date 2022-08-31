@@ -86,15 +86,14 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {'documentation', 'detail', 'additionalTextEdits'}
 }
 
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, km_opts)
+
 local on_attach = function(client, bufnr)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, km_opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, km_opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, km_opts)
-    vim.api.nvim_set_keymap('n', '<space>e',
-                            '<cmd>lua vim.diagnostic.open_float()<CR>', km_opts)
-    vim.api.nvim_set_keymap('n', '<space>rn',
-                            '<cmd>lua vim.lsp.buf.rename()<CR>', km_opts)
-    vim.api.nvim_set_keymap('n', '<space>f',
-                            '<cmd>lua vim.lsp.buf.formatting_sync(nil, 10000)<cr>',
-                            km_opts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, km_opts)
+    vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, km_opts)
 end
 
 require('lspconfig').pyright.setup {
