@@ -16,7 +16,6 @@
     - git
     - htop
     - jsonnet
-    - nodejs
     - python3-pip
     - python3-venv
     - ripgrep
@@ -31,10 +30,22 @@
     classic: "{{ item.classic }}"
   when: ansible_distribution == "Ubuntu"
   loop:
-    - name: "nvim"
-      classic: "yes"
     - name: "shfmt"
       classic: "no"
+    - name: "node"
+      classic: "yes"
+
+- name: Install tools with npm
+  community.general.npm:
+    name: tree-sitter-cli
+    global: true
+    executable: /snap/bin/npm
+
+- name: Install neovim from appimage
+  ansible.builtin.get_url:
+    url: https://github.com/neovim/neovim/releases/download/v0.8.0/nvim.appimage
+    dest: "/home/{{ user.username }}/.local/bin/nvim"
+    mode: "755"
 
 - name: create users
   ansible.builtin.user:
