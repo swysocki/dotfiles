@@ -93,7 +93,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, km_opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, km_opts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, km_opts)
-    vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, km_opts)
+    vim.keymap.set('n', '<space>f', vim.lsp.buf.format, km_opts)
 end
 
 require('lspconfig').pyright.setup {

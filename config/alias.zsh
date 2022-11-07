@@ -3,7 +3,10 @@
 # general
 alias mp='multipass'
 alias vim='nvim'
-# 
+ 
+# multipass shell
+alias mpconnect='multipass exec fw-builder -- sudo -i -u swysocki'
+#
 # tmux
 alias tmls='tmux ls'
 alias tma='tmux attach -t'
