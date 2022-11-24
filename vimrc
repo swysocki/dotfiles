@@ -13,6 +13,12 @@ set updatetime=300
 " make whitespace characters appear
 set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 
+" the nord colorscheme requires termguicolors to be compiled in Vim
+if exists('+termguicolors')
+	set termguicolors
+	colorscheme nord
+endif
+
 " fzf setup
 if has('macunix')
     set rtp+=/usr/local/opt/fzf
