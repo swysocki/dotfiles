@@ -1,9 +1,15 @@
-[submodule "fzf"]
-	path = fzf
-	url = https://github.com/junegunn/fzf.git
 [submodule "vimfiles/pack/swysocki/start/fzf"]
 	path = vim/pack/swysocki/start/fzf
 	url = https://github.com/junegunn/fzf.git
-[submodule "vimfiles/pack/swysocki/start/vim-fugitive"]
-	path = vimfiles/pack/swysocki/start/vim-fugitive
+[submodule "vim/pack/swysocki/start/ale"]
+	path = vim/pack/swysocki/start/ale
+	url = https://github.com/dense-analysis/ale.git
+[submodule "vim/pack/swysocki/start/nord"]
+	path = vim/pack/swysocki/start/nord
+	url = https://github.com/arcticicestudio/nord-vim.git
+[submodule "vim/pack/swysocki/start/vim-sensible"]
+	path = vim/pack/swysocki/start/vim-sensible
+	url = https://github.com/tpope/vim-sensible.git
+[submodule "vim/pack/swysocki/start/vim-fugitive"]
+	path = vim/pack/swysocki/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
