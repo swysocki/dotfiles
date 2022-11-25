@@ -1,6 +1,0 @@
-users:
-  - default
-  - name: swysocki
-    sudo: ALL=(ALL) NOPASSWD:ALL
-    ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlnFHI5swpZl5FG+BINqcr0TcAuOhYl9isMxgGyXkFU swysocki
