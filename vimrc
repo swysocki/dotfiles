@@ -7,7 +7,7 @@ set number relativenumber
 " disable swap files, live dangerously
 set noswapfile
 
-" decrease the time it take for hover events
+" decrease the time it takes for hover events
 set updatetime=300
 
 " make whitespace characters appear
