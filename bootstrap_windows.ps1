@@ -4,13 +4,6 @@ winget install Git.Git
 winget install WezTerm
 winget install Vim
 
-function Append-Path {
-	param($NewPath)
-	$userpath = [System.Environment]::GetEnvironmentVariable("PATH","USER")
-	$userpath = $userpath + ";$NewPath"
-	[System.Environment]::SetEnvironmentVariable("PATH",$userpath,"USER")
-}
-
 # clone my dotfiles
 git clone https://github.com/swysocki/dotfiles.git $HOME/devel/repos/dotfiles
 git submodule update --init
@@ -27,6 +20,3 @@ cd $HOME\.fzf
 .\install.ps1
 cd $curDir
 
-
-# $myPath=$(Join-Path $HOME -ChildPath ".fzf\bin\")
-# Append-Path $myPath
