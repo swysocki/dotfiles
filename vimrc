@@ -31,6 +31,10 @@ autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType shell setlocal shiftwidth=4 softtabstop=4 expandtab
 
 " Ale configuration
+let g:ale_completion_enabled = 1
+set completeopt=menu,menuone,popup,noselect,noinsert
+set omnifunc=ale#completion#OmniFunc
+
 let g:ale_fixers = {
 \  'python' :['isort', 'black'],
 \  'sh' :['shfmt']
