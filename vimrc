@@ -32,6 +32,7 @@ autocmd FileType shell setlocal shiftwidth=4 softtabstop=4 expandtab
 
 " Ale configuration
 let g:ale_completion_enabled = 1
+let g:ale_hover_to_floating_preview = 1
 set completeopt=menu,menuone,popup,noselect,noinsert
 set omnifunc=ale#completion#OmniFunc
 
