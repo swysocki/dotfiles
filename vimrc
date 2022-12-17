@@ -1,3 +1,12 @@
+" setup plugins using vim-plug
+"
+call plug#begin()
+Plug 'dense-analysis/ale'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'arcticicestudio/nord-vim'
+call plug#end()
+
 " disable Vi mode
 setglobal nocompatible
 
