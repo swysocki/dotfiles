@@ -15,8 +15,8 @@ set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 
 " the nord colorscheme requires termguicolors to be compiled in Vim
 if exists('+termguicolors')
-	set termguicolors
-	colorscheme nord
+    set termguicolors
+    colorscheme nord
 endif
 
 " fzf setup
@@ -25,6 +25,16 @@ if has('macunix')
 elseif has('win32') || has('unix')
     set rtp+=~/.fzf
 endif
+
+" custom function keymaps
+nnoremap <F1> :ALEFix<CR>
+nnoremap <F2> :ALERename<CR>
+nnoremap <F6> :Lexplore<CR>
+
+" custom leader keymaps
+let g:mapleader = ","
+map <leader>c :noh<CR>
+map <leader>ff :FZF<CR>
 
 " extra filetypes not handled by default
 autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
@@ -38,7 +48,8 @@ set omnifunc=ale#completion#OmniFunc
 
 let g:ale_fixers = {
 \  'python' :['isort', 'black'],
-\  'sh' :['shfmt']
+\  'sh' :['shfmt'],
+\  'json' :['jq']
 \}
 
 let g:ale_linters = {
