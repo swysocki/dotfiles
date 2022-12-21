@@ -13,6 +13,7 @@ vim.filetype.add({
 
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.local/share/nvim/plugged')
+Plug 'shaunsingh/nord.nvim'
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'nvim-lua/plenary.nvim'
@@ -32,7 +33,7 @@ vim.call('plug#end')
 vim.cmd [[
 autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 
-colorscheme gruvbox
+colorscheme nord
 ]]
 
 require('feline').setup()
@@ -71,7 +72,6 @@ cmp.setup({
     sources = cmp.config.sources({{name = 'nvim_lsp'}}, {{name = 'buffer'}})
 })
 
-
 require('nvim-treesitter.configs').setup {
     ensure_installed = { "python", "yaml", "bash", "lua" },
     sync_install = false,
@@ -88,19 +88,13 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, km_opts)
 
-local on_attach = function(client, bufnr)
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, km_opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, km_opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, km_opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, km_opts)
-    vim.keymap.set('n', '<space>f', vim.lsp.buf.format, km_opts)
-end
+local on_attach = require('keymaps')
 
 require('lspconfig').pyright.setup {
     on_attach = on_attach,
     capabilities = capabilities
 }
 require('lspconfig').jsonnet_ls.setup {
-    capabilities = capabilities,
+    capabilities = on_attach,
     on_attach = on_attach
 }

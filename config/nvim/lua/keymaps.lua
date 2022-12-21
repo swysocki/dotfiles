@@ -8,7 +8,7 @@ local function map(mode, lhs, rhs, opts)
   if opts then
     options = vim.tbl_extend('force', km_opts, opts)
   end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, km_opts)
+  vim.keymap.set(mode, lhs, rhs, km_opts)
 end
 
 map('', '<F6>', ':NvimTreeToggle<CR>', {})
@@ -28,3 +28,14 @@ map('n', '<leader>c', ':noh<CR>')
 map('t', '<Esc>', '<C-\\><C-n>')
 
 map('n', '<leader>s', ':w<CR>')
+
+-- LSP keymaps
+local on_attach = function(client, bufnr)
+    vim.keymap.set('n', '<leader>gD', vim.lsp.buf.declaration, km_opts)
+    vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, km_opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, km_opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, km_opts)
+    vim.keymap.set('n', '<leader>rf', vim.lsp.buf.format, km_opts)
+end
+
+return on_attach
