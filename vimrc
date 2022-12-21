@@ -38,6 +38,7 @@ endif
 " custom function keymaps
 nnoremap <F1> :ALEFix<CR>
 nnoremap <F2> :ALERename<CR>
+nnoremap <F3> :ALEGoToDefinition<CR>
 nnoremap <F6> :Lexplore<CR>
 
 " custom leader keymaps
@@ -52,8 +53,14 @@ autocmd FileType shell setlocal shiftwidth=4 softtabstop=4 expandtab
 " Ale configuration
 let g:ale_completion_enabled = 1
 let g:ale_hover_to_floating_preview = 1
+let g:ale_cursor_detail = 1
 set completeopt=menu,menuone,popup,noselect,noinsert
 set omnifunc=ale#completion#OmniFunc
+
+augroup ale_hover_cursor
+  autocmd!
+  autocmd CursorHold * ALEHover
+augroup END
 
 let g:ale_fixers = {
 \  'python' :['isort', 'black'],
