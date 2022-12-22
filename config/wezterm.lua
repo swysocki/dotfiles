@@ -1,5 +1,5 @@
 return {
-  color_scheme = "Gruvbox Dark",
+  color_scheme = "Nord (base16)",
   font_size = 12.0,
-  enable_tab_bar = true,
+  hide_tab_bar_if_only_one_tab = true
 }

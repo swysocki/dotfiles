@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# The is macos specific (for now) and assumes that we are using the
+# shell provided by `brew install bash`.  Once that is complete switch
+# shells with `chsh -s /usr/local/bin/bash`
+
+# Brew specific completions for git
+if [[ -f /usr/local/etc/bash_completion.d/git-completion.bash ]];then
+  source /usr/local/etc/bash_completion.d/git-completion.bash
+fi
+
+# aliases
+alias ll="ls -la --color"
+
+# git aliases mostly stolen from git.plugin.zsh
+# Check if main exists and use instead of master
+function git_main_branch() {
+  command git rev-parse --git-dir &>/dev/null || return
+  local ref
+  for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk}; do
+    if command git show-ref -q --verify $ref; then
+      echo "${ref##*/}"
+      return
+    fi
+  done
+  echo master
+}
+
+alias gba="git branch -a"
+alias gcb="git checkout -b"
+alias gcm='git checkout $(git_main_branch)'
+alias gco="git checkout"
+alias gl="git pull"
+alias glo="git log --oneline --decorate"
+alias grbi="git rebase -i"
+alias gst="git status"
+
+# general
+alias mp='multipass'
+
+# multipass shell
+alias mpconnect='multipass exec fw-builder -- sudo -i -u swysocki'
+
+# tmux
+alias tmls='tmux ls'
+alias tma='tmux attach -t'
+alias tmn='tmux new -s'
+
+# docker
+alias dorn='docker run --rm -it'
+
+
+function parse_branch {
+    GIT_BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/*\ \(.*\)/ (\1)/')
+}
+
+function check_ssh {
+    MY_HOST=""
+    if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]];then
+	MY_HOST="$(hostname)@"
+    fi
+}
+
+function check_venv {
+    VENV_NAME=""
+    if [[ -n "$VIRTUAL_ENV" ]];then
+        VENV_NAME="($(basename $VIRTUAL_ENV))"
+    fi
+}
+
+function build_prompt {
+    check_ssh
+    parse_branch
+    check_venv
+    export PS1="\$VENV_NAME\$MY_HOST\[\033[01;32m\]\u:\[\033[01;34m\]\\w\[\e[0;33m\]\$GIT_BRANCH \[\e[0;34m\]$ \[\e[0m\]"
+}
+
+export PROMPT_DIRTRIM=2
+export PROMPT_COMMAND=build_prompt
+
+[ -f ~/.fzf.bash ] && source "$HOME/.fzf.bash"
+
+# Created by `pipx` on 2022-12-07 18:34:16
+export PATH="$PATH:/Users/swysocki/.local/bin"
