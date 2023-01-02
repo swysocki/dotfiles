@@ -4,8 +4,8 @@
     group_name: "{{ user.username }}"
     home_path: "/home/{{ user.username }}"
     pip_version: "pip3"
-    pipx_path: "/home/{{ user.username }}/.local/bin/pipx"
-
+    pipx_path: "/usr/bin/pipx"
+  
 - name: install common tools
   ansible.builtin.package:
     name: "{{ item }}"
@@ -16,6 +16,8 @@
     - git
     - htop
     - jsonnet
+    - libfuse2
+    - pipx
     - python3-pip
     - python3-venv
     - ripgrep
@@ -23,35 +25,21 @@
     - tmux
     - virtualenv
     - zsh
-
-- name: install tools with snap
-  community.general.snap:
-    name: "{{ item.name }}"
-    classic: "{{ item.classic }}"
-  when: ansible_distribution == "Ubuntu"
-  loop:
-    - name: "shfmt"
-      classic: "no"
-    - name: "node"
-      classic: "yes"
-
-- name: Install tools with npm
-  community.general.npm:
-    name: tree-sitter-cli
-    global: true
-    executable: /snap/bin/npm
+  become: true
 
 - name: Install neovim from appimage
   ansible.builtin.get_url:
-    url: https://github.com/neovim/neovim/releases/download/v0.8.0/nvim.appimage
+    url: "https://github.com/neovim/neovim/releases/download/v{{ neovim_version }}/nvim.appimage"
     dest: "/home/{{ user.username }}/.local/bin/nvim"
     mode: "755"
+    checksum: "sha256:{{ neovim_hash }}"
 
 - name: create users
   ansible.builtin.user:
     name: "{{ user.username }}"
     shell: "/bin/{{ user.default_shell }}"
     groups: sudo
+  become: true
 
 - name: set authorized keys
   ansible.posix.authorized_key:
@@ -66,9 +54,4 @@
     regexp: '^%sudo'
     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
-
-- name: install pipx using pip
-  ansible.builtin.pip:
-    name: pipx
-    extra_args: --user
-  become_user: "{{ user.username }}"
+  become: true

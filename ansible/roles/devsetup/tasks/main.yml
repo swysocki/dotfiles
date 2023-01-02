@@ -1,7 +1,7 @@
 ---
 - name: run debian tasks
-  ansible.builtin.include_tasks: debian.yml
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  ansible.builtin.include_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '22.04'
 
 - name: run macos tasks
   ansible.builtin.include_tasks: macos.yml
