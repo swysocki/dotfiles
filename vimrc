@@ -5,6 +5,8 @@ Plug 'dense-analysis/ale'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'arcticicestudio/nord-vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " disable Vi mode
@@ -28,12 +30,6 @@ if exists('+termguicolors')
     colorscheme nord
 endif
 
-" fzf setup
-if has('macunix')
-    set rtp+=/usr/local/opt/fzf
-elseif has('win32') || has('unix')
-    set rtp+=~/.fzf
-endif
 
 " custom function keymaps
 nnoremap <F1> :ALEFix<CR>
@@ -44,7 +40,9 @@ nnoremap <F6> :Lexplore<CR>
 " custom leader keymaps
 let g:mapleader = ","
 map <leader>c :noh<CR>
-map <leader>ff :FZF<CR>
+map <leader>fb :Buffers<CR>
+map <leader>ff :Files<CR>
+map <leader>fg :Rg<CR>
 
 " extra filetypes not handled by default
 autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
@@ -52,6 +50,7 @@ autocmd FileType shell setlocal shiftwidth=4 softtabstop=4 expandtab
 
 " Ale configuration
 let g:ale_completion_enabled = 1
+" this puts the ALEHover info in a preview popup instead of the preview windows
 let g:ale_hover_to_floating_preview = 1
 set completeopt=menu,menuone,popup,noselect,noinsert
 set omnifunc=ale#completion#OmniFunc
