@@ -5,8 +5,11 @@ Plug 'dense-analysis/ale'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'arcticicestudio/nord-vim'
+Plug 'lifepillar/vim-gruvbox8'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'google/vim-jsonnet'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " disable Vi mode
@@ -47,6 +50,7 @@ map <leader>fg :Rg<CR>
 " extra filetypes not handled by default
 autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType shell setlocal shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType python setlocal colorcolumn=89
 
 " Ale configuration
 let g:ale_completion_enabled = 1
