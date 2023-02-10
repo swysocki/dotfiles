@@ -25,7 +25,7 @@ function git_main_branch() {
   echo master
 }
 
-alias gba="git branch -a"
+alias gba="git branch -a --sort=-committerdate"
 alias gcb="git checkout -b"
 alias gcm='git checkout $(git_main_branch)'
 alias gco="git checkout"
