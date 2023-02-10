@@ -20,7 +20,7 @@
     - hadolint
     - jq
     - jsonnet
-    - neovim@{{ neovim_version }}
+    - neovim
     - pipx
     - pyright
     - python@{{ python_version }}
