@@ -33,7 +33,7 @@ vim.call('plug#end')
 vim.cmd [[
 autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 
-colorscheme nord
+colorscheme gruvbox
 ]]
 
 require('feline').setup()
