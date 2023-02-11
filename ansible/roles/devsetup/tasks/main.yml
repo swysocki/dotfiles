@@ -108,6 +108,7 @@
     force: yes
     state: link
   with_items:
+    - {source: 'vimrc', destination: '.vimrc'}
     - {source: 'config/nvim', destination: '.config/nvim'}
     - {source: 'config/tmux.conf', destination: '.tmux.conf'}
     - {source: 'config/zshrc', destination: '.zshrc'}
