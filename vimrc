@@ -5,7 +5,7 @@ Plug 'dense-analysis/ale'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'arcticicestudio/nord-vim'
-Plug 'lifepillar/vim-gruvbox8'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'google/vim-jsonnet'
@@ -30,7 +30,7 @@ set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 " the nord colorscheme requires termguicolors to be compiled in Vim
 if exists('+termguicolors')
     set termguicolors
-    colorscheme nord
+    colorscheme dracula " nord
 endif
 
 

@@ -7,7 +7,8 @@ return {
   color_schemes = {
     ['My Theme'] = gruvbox,
   },
-  color_scheme = 'My Theme',
+  color_scheme = 'Dracula', -- favorites: 'nord', 'Dracula'
   font_size = 12.0,
-  hide_tab_bar_if_only_one_tab = true
+  hide_tab_bar_if_only_one_tab = true,
+  audible_bell = 'Disabled'
 }
