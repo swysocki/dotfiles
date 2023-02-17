@@ -27,13 +27,6 @@
     - zsh
   become: true
 
-- name: Install neovim from appimage
-  ansible.builtin.get_url:
-    url: "https://github.com/neovim/neovim/releases/download/v{{ neovim_version }}/nvim.appimage"
-    dest: "/home/{{ user.username }}/.local/bin/nvim"
-    mode: "755"
-    checksum: "sha256:{{ neovim_hash }}"
-
 - name: create users
   ansible.builtin.user:
     name: "{{ user.username }}"
@@ -55,3 +48,17 @@
     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
   become: true
+
+- name: Create local bin path
+  ansible.builtin.file:
+    path: "{{ home_path }}/.local/bin"
+    state: directory
+    owner: "{{ user.username }}"
+    group: "{{ group_name }}"
+
+- name: Install neovim from appimage
+  ansible.builtin.get_url:
+    url: "https://github.com/neovim/neovim/releases/download/v{{ neovim_version }}/nvim.appimage"
+    dest: "/home/{{ user.username }}/.local/bin/nvim"
+    mode: "755"
+    checksum: "sha256:{{ neovim_hash }}"
