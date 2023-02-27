@@ -54,6 +54,8 @@ autocmd FileType python setlocal colorcolumn=89
 
 " Ale configuration
 let g:ale_completion_enabled = 1
+" remove the + - + preview borders
+let g:ale_floating_window_border = []
 " this puts the ALEHover info in a preview popup instead of the preview windows
 let g:ale_hover_to_floating_preview = 1
 set completeopt=menu,menuone,popup,noselect,noinsert
