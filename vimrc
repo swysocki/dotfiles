@@ -78,3 +78,11 @@ let g:ale_linters = {
 
 let g:ale_python_flake8_options = '--max-line-length=88'
 let g:ale_sh_shfmt_options = '-ci -i 4'
+
+function! OpenMarkdownFirefox()
+  silent !clear
+  execute "silent !open -a firefox %"
+  redraw!
+endfunction
+
+nnoremap <buffer> <leader>md :call OpenMarkdownFirefox()<cr>
