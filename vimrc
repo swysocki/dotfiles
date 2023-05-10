@@ -27,10 +27,16 @@ set updatetime=300
 " make whitespace characters appear
 set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 
+" vertical 'wildmenu' options
+set wildoptions=pum
+
 " the nord colorscheme requires termguicolors to be compiled in Vim
 if exists('+termguicolors')
     set termguicolors
     colorscheme dracula " nord
+    if $TERM_PROGRAM == "Apple_Terminal"
+      set notermguicolors
+    endif
 endif
 
 
@@ -50,7 +56,7 @@ map <leader>fg :Rg<CR>
 " extra filetypes not handled by default
 autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType shell setlocal shiftwidth=4 softtabstop=4 expandtab
-autocmd FileType python setlocal colorcolumn=89
+autocmd FileType python setlocal colorcolumn=89 foldmethod=indent foldnestmax=1
 
 " Ale configuration
 let g:ale_completion_enabled = 1
@@ -58,7 +64,8 @@ let g:ale_completion_enabled = 1
 let g:ale_floating_window_border = []
 " this puts the ALEHover info in a preview popup instead of the preview windows
 let g:ale_hover_to_floating_preview = 1
-set completeopt=menu,menuone,popup,noselect,noinsert
+"set completeopt=menu,menuone,popup,noselect,noinsert
+set completeopt=menu,menuone,noselect,noinsert
 set omnifunc=ale#completion#OmniFunc
 
 augroup ale_hover_cursor
