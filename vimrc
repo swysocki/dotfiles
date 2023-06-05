@@ -30,10 +30,13 @@ set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 " vertical 'wildmenu' options
 set wildoptions=pum
 
+" change the split window divider to a single, thin line
+set fillchars+=vert:\▏
+
 " the nord colorscheme requires termguicolors to be compiled in Vim
 if exists('+termguicolors')
     set termguicolors
-    colorscheme dracula " nord
+    colorscheme nord
     if $TERM_PROGRAM == "Apple_Terminal"
       set notermguicolors
     endif
@@ -52,6 +55,7 @@ map <leader>c :noh<CR>
 map <leader>fb :Buffers<CR>
 map <leader>ff :Files<CR>
 map <leader>fg :Rg<CR>
+map <leader>fh :History:<CR>
 
 " extra filetypes not handled by default
 autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
@@ -68,10 +72,10 @@ let g:ale_hover_to_floating_preview = 1
 set completeopt=menu,menuone,noselect,noinsert
 set omnifunc=ale#completion#OmniFunc
 
-augroup ale_hover_cursor
-  autocmd!
-  autocmd CursorHold * ALEHover
-augroup END
+" augroup ale_hover_cursor
+"   autocmd!
+"   autocmd CursorHold * ALEHover
+" augroup END
 
 let g:ale_fixers = {
 \  'python' :['isort', 'black'],
