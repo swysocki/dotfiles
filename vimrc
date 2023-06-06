@@ -62,8 +62,14 @@ autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType shell setlocal shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType python setlocal colorcolumn=89 foldmethod=indent foldnestmax=1
 
-" Ale configuration
+" ALE configuration
+
+" enabled built in completion
 let g:ale_completion_enabled = 1
+" increase the completion suggestions in hopes that we are given the symbol
+" we are looking for. It would be great to get some type of suggestion
+" ordering so that 'text' suggestions don't take up all of the completions
+let g:ale_completion_max_suggestions = 150
 " remove the + - + preview borders
 let g:ale_floating_window_border = []
 " this puts the ALEHover info in a preview popup instead of the preview windows
@@ -76,6 +82,36 @@ set omnifunc=ale#completion#OmniFunc
 "   autocmd!
 "   autocmd CursorHold * ALEHover
 " augroup END
+
+" fancy symbols for autocomplete
+let g:ale_completion_symbols = {
+  \ 'text': '',
+  \ 'method': '',
+  \ 'function': '',
+  \ 'constructor': '',
+  \ 'field': '',
+  \ 'variable': '',
+  \ 'class': '',
+  \ 'interface': '',
+  \ 'module': '',
+  \ 'property': '',
+  \ 'unit': 'unit',
+  \ 'value': 'val',
+  \ 'enum': '',
+  \ 'keyword': 'keyword',
+  \ 'snippet': '',
+  \ 'color': 'color',
+  \ 'file': '',
+  \ 'reference': 'ref',
+  \ 'folder': '',
+  \ 'enum member': '',
+  \ 'constant': '',
+  \ 'struct': '',
+  \ 'event': 'event',
+  \ 'operator': '',
+  \ 'type_parameter': 'type param',
+  \ '<default>': 'v'
+  \ }
 
 let g:ale_fixers = {
 \  'python' :['isort', 'black'],
