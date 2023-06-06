@@ -15,6 +15,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.local/share/nvim/plugged')
 Plug 'shaunsingh/nord.nvim'
 Plug 'ellisonleao/gruvbox.nvim'
+Plug 'Mofiqul/dracula.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -27,16 +28,14 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'google/vim-jsonnet'
-Plug 'feline-nvim/feline.nvim'
 vim.call('plug#end')
 
 vim.cmd [[
 autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 
-colorscheme gruvbox
+let g:nord_italic = v:false
+colorscheme nord
 ]]
-
-require('feline').setup()
 
 require("null-ls").setup({
     sources = {
