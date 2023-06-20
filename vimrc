@@ -12,6 +12,7 @@ Plug 'google/vim-jsonnet'
 Plug 'sheerun/vim-polyglot'
 call plug#end()
 
+
 " disable Vi mode
 setglobal nocompatible
 
@@ -62,56 +63,14 @@ autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType shell setlocal shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType python setlocal colorcolumn=89 foldmethod=indent foldnestmax=1
 
-" ALE configuration
-
-" enabled built in completion
-let g:ale_completion_enabled = 1
-" increase the completion suggestions in hopes that we are given the symbol
-" we are looking for. It would be great to get some type of suggestion
-" ordering so that 'text' suggestions don't take up all of the completions
-let g:ale_completion_max_suggestions = 150
-" remove the + - + preview borders
-let g:ale_floating_window_border = []
-" this puts the ALEHover info in a preview popup instead of the preview windows
-let g:ale_hover_to_floating_preview = 1
 "set completeopt=menu,menuone,popup,noselect,noinsert
 set completeopt=menu,menuone,noselect,noinsert
-set omnifunc=ale#completion#OmniFunc
 
-" augroup ale_hover_cursor
-"   autocmd!
-"   autocmd CursorHold * ALEHover
-" augroup END
+" ALE configuration
 
-" fancy symbols for autocomplete
-let g:ale_completion_symbols = {
-  \ 'text': '',
-  \ 'method': '',
-  \ 'function': '',
-  \ 'constructor': '',
-  \ 'field': '',
-  \ 'variable': '',
-  \ 'class': '',
-  \ 'interface': '',
-  \ 'module': '',
-  \ 'property': '',
-  \ 'unit': 'unit',
-  \ 'value': 'val',
-  \ 'enum': '',
-  \ 'keyword': 'keyword',
-  \ 'snippet': '',
-  \ 'color': 'color',
-  \ 'file': '',
-  \ 'reference': 'ref',
-  \ 'folder': '',
-  \ 'enum member': '',
-  \ 'constant': '',
-  \ 'struct': '',
-  \ 'event': 'event',
-  \ 'operator': '',
-  \ 'type_parameter': 'type param',
-  \ '<default>': 'v'
-  \ }
+" disable completion and LSP 
+let g:ale_completion_enabled = 0
+let g:ale_disable_lsp = 1
 
 let g:ale_fixers = {
 \  'python' :['isort', 'black'],
@@ -120,7 +79,7 @@ let g:ale_fixers = {
 \}
 
 let g:ale_linters = {
-\  'python' :['flake8', 'pyright']
+\  'python' :['flake8']
 \}
 
 let g:ale_python_flake8_options = '--max-line-length=88'
@@ -133,3 +92,54 @@ function! OpenMarkdownFirefox()
 endfunction
 
 nnoremap <buffer> <leader>md :call OpenMarkdownFirefox()<cr>
+
+" yegappan/lsp
+"
+" has to be installed manually for `packadd` to work
+packadd lsp
+
+call LspAddServer([#{
+\ name: 'pyright',
+\ filetype: 'python',
+\ path: '/usr/local/bin/pyright-langserver',
+\ args: ['--stdio'],
+\ workspaceConfig: #{
+\  python: #{
+\    pythonPath: 'python'
+\  }}
+\ }])
+
+" fancy symbols for autocomplete
+call LspOptionsSet(#{
+\ customCompletionKinds: v:true,
+\ completionKinds: {
+\ 'Text': '',
+\ 'Method': '',
+\ 'Function': '',
+\ 'Constructor': '',
+\ 'Field': '',
+\ 'Variable': '',
+\ 'Class': '',
+\ 'Interface': '',
+\ 'Module': '',
+\ 'Property': '',
+\ 'Unit': 'unit',
+\ 'Value': 'val',
+\ 'Enum': '',
+\ 'Keyword': 'keyword',
+\ 'Snippet': '',
+\ 'Color': 'color',
+\ 'File': '',
+\ 'Reference': 'ref',
+\ 'Folder': '',
+\ 'Enum member': '',
+\ 'Constant': '',
+\ 'Struct': '',
+\ 'Event': 'event',
+\ 'Operator': '',
+\ }
+\})
+
+" need to add the logic to only add this mapping when
+" the LSP is active
+nnoremap <silent> K :LspHover<CR>
