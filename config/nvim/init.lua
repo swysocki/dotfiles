@@ -13,11 +13,10 @@ vim.filetype.add({
 
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.local/share/nvim/plugged')
-Plug 'shaunsingh/nord.nvim'
-Plug 'ellisonleao/gruvbox.nvim'
-Plug 'Mofiqul/dracula.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'rktjmp/lush.nvim'
+Plug 'mcchrish/zenbones.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = 'TSUpdate'})
 Plug 'neovim/nvim-lspconfig'
@@ -33,8 +32,7 @@ vim.call('plug#end')
 vim.cmd [[
 autocmd BufNewFile,BufRead "dev-ac*" set ft=sh
 
-let g:nord_italic = v:false
-colorscheme nord
+colorscheme zenbones
 ]]
 
 require("null-ls").setup({
