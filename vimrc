@@ -4,14 +4,17 @@ call plug#begin()
 Plug 'dense-analysis/ale'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
-Plug 'arcticicestudio/nord-vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'airblade/vim-gitgutter'
+Plug 'mcchrish/zenbones.nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'google/vim-jsonnet'
 Plug 'sheerun/vim-polyglot'
 call plug#end()
 
+" allow project specific vimrc files
+set exrc
+set secure
 
 " disable Vi mode
 setglobal nocompatible
@@ -37,7 +40,8 @@ set fillchars+=vert:\▏
 " the nord colorscheme requires termguicolors to be compiled in Vim
 if exists('+termguicolors')
     set termguicolors
-    colorscheme nord
+    set background=dark
+    colorscheme habamax
     if $TERM_PROGRAM == "Apple_Terminal"
       set notermguicolors
     endif
@@ -45,9 +49,7 @@ endif
 
 
 " custom function keymaps
-nnoremap <F1> :ALEFix<CR>
-nnoremap <F2> :ALERename<CR>
-nnoremap <F3> :ALEGoToDefinition<CR>
+nnoremap <leader>rf :ALEFix<CR>
 nnoremap <F6> :Lexplore<CR>
 
 " custom leader keymaps
@@ -66,7 +68,14 @@ autocmd FileType python setlocal colorcolumn=89 foldmethod=indent foldnestmax=1
 "set completeopt=menu,menuone,popup,noselect,noinsert
 set completeopt=menu,menuone,noselect,noinsert
 
+" Netrw changes
+let g:netrw_winsize = 25
+let g:netrw_banner = 0
+let g:netrw_keepdir = 0
+
 " ALE configuration
+let g:gitgutter_sign_priority = 9 
+let g:ale_sign_priority = 30 " I want ALE's symbols to take priority over vim-gitgutter
 
 " disable completion and LSP 
 let g:ale_completion_enabled = 0
@@ -79,10 +88,9 @@ let g:ale_fixers = {
 \}
 
 let g:ale_linters = {
-\  'python' :['flake8']
+\  'python' :['flake8', 'pylint']
 \}
 
-let g:ale_python_flake8_options = '--max-line-length=88'
 let g:ale_sh_shfmt_options = '-ci -i 4'
 
 function! OpenMarkdownFirefox()
@@ -143,3 +151,7 @@ call LspOptionsSet(#{
 " need to add the logic to only add this mapping when
 " the LSP is active
 nnoremap <silent> K :LspHover<CR>
+nnoremap <leader>gd :LspGotoDefinition<CR>
+nnoremap <leader>e :LspDiagCurrent<CR>
+nnoremap <leader>pd :LspPeekDefinition<CR>
+nnoremap <leader>rn :LspRename<CR>
