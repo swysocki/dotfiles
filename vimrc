@@ -49,7 +49,7 @@ endif
 
 
 " custom function keymaps
-nnoremap <leader>rf :ALEFix<CR>
+nnoremap <leader>fo :ALEFix<CR>
 nnoremap <F6> :Lexplore<CR>
 
 " custom leader keymaps
@@ -63,7 +63,7 @@ map <leader>fh :History:<CR>
 " extra filetypes not handled by default
 autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType shell setlocal shiftwidth=4 softtabstop=4 expandtab
-autocmd FileType python setlocal colorcolumn=89 foldmethod=indent foldnestmax=1
+autocmd FileType python setlocal foldmethod=indent foldnestmax=1
 
 "set completeopt=menu,menuone,popup,noselect,noinsert
 set completeopt=menu,menuone,noselect,noinsert
