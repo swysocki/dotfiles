@@ -37,11 +37,17 @@ set wildoptions=pum
 " change the split window divider to a single, thin line
 set fillchars+=vert:\▏
 
+" make the cursor location easier to identify
+set cursorline
+
+" leave N lines at the top or bottom of buffer
+set scrolloff=10
+
 " the nord colorscheme requires termguicolors to be compiled in Vim
 if exists('+termguicolors')
     set termguicolors
     set background=dark
-    colorscheme habamax
+    colorscheme neobones
     if $TERM_PROGRAM == "Apple_Terminal"
       set notermguicolors
     endif
@@ -49,7 +55,6 @@ endif
 
 
 " custom function keymaps
-nnoremap <leader>fo :ALEFix<CR>
 nnoremap <F6> :Lexplore<CR>
 
 " custom leader keymaps
@@ -59,6 +64,7 @@ map <leader>fb :Buffers<CR>
 map <leader>ff :Files<CR>
 map <leader>fg :Rg<CR>
 map <leader>fh :History:<CR>
+map <leader>fo :ALEFix<CR>
 
 " extra filetypes not handled by default
 autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
@@ -84,11 +90,14 @@ let g:ale_disable_lsp = 1
 let g:ale_fixers = {
 \  'python' :['isort', 'black'],
 \  'sh' :['shfmt'],
-\  'json' :['jq']
+\  'json' :['jq'],
+\  'javascript': ['prettier'],
+\  'typescript': ['prettier']
 \}
 
 let g:ale_linters = {
-\  'python' :['flake8', 'pylint']
+\  'python' :['flake8', 'pylint'],
+\  'yaml' :['yamllint']
 \}
 
 let g:ale_sh_shfmt_options = '-ci -i 4'
@@ -115,6 +124,13 @@ call LspAddServer([#{
 \  python: #{
 \    pythonPath: 'python'
 \  }}
+\ }])
+
+call LspAddServer([#{
+\ name: 'tsserver',
+\ filetype: ['javascript', 'typescript'],
+\ path: '/usr/local/bin/typescript-language-server',
+\ args: ['--stdio'],
 \ }])
 
 " fancy symbols for autocomplete
@@ -154,4 +170,5 @@ nnoremap <silent> K :LspHover<CR>
 nnoremap <leader>gd :LspGotoDefinition<CR>
 nnoremap <leader>e :LspDiagCurrent<CR>
 nnoremap <leader>pd :LspPeekDefinition<CR>
+nnoremap <leader>pr :LspPeekReferences<CR>
 nnoremap <leader>rn :LspRename<CR>
