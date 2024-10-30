@@ -47,7 +47,7 @@ set scrolloff=10
 if exists('+termguicolors')
     set termguicolors
     set background=dark
-    colorscheme neobones
+    colorscheme habamax
     if $TERM_PROGRAM == "Apple_Terminal"
       set notermguicolors
     endif
@@ -59,12 +59,27 @@ nnoremap <F6> :Lexplore<CR>
 
 " custom leader keymaps
 let g:mapleader = ","
-map <leader>c :noh<CR>
-map <leader>fb :Buffers<CR>
-map <leader>ff :Files<CR>
-map <leader>fg :Rg<CR>
-map <leader>fh :History:<CR>
-map <leader>fo :ALEFix<CR>
+
+" clear highlighting
+nnoremap <leader>c :noh<CR>
+
+" escape terminal mode sanely
+" tnoremap <Esc> <C-\><C-n>
+
+" quicker access to location list because it toggle this to see
+" ALE messages often
+nnoremap <leader>ll :lopen<CR>
+nnoremap <leader>lc :lclose<CR>
+
+
+" fzf plugin keymap
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fg :Rg<CR>
+nnoremap <leader>fh :History:<CR>
+
+" ALE format keymap
+nnoremap <leader>fo :ALEFix<CR>
 
 " extra filetypes not handled by default
 autocmd FileType json,jsonnet setlocal shiftwidth=4 softtabstop=4 expandtab
@@ -80,10 +95,10 @@ let g:netrw_banner = 0
 let g:netrw_keepdir = 0
 
 " ALE configuration
-let g:gitgutter_sign_priority = 9 
+let g:gitgutter_sign_priority = 9
 let g:ale_sign_priority = 30 " I want ALE's symbols to take priority over vim-gitgutter
 
-" disable completion and LSP 
+" disable completion and LSP
 let g:ale_completion_enabled = 0
 let g:ale_disable_lsp = 1
 
